@@ -85,7 +85,8 @@ export default function App() {
         <Route  exact path="/features" component={FeaturePage} />
         <Route  exact path="" component={NotFoundPage} />
       </Switch>
-      {
+      { 
+      
         location.pathname.includes('/homeAdmin') ? <div></div> : <Footer />
 
       }
