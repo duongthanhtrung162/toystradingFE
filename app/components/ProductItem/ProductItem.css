@@ -1,0 +1,53 @@
+.product-item .MuiCardContent-root{
+    padding: 5px;
+}
+.product-item-infor span {
+    font-size: 18px;
+}
+.product-item-infor .product-price {
+    margin-left: 5px;
+}
+.product-item .description {
+    font-weight: 400;
+    color: #666;
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+.product-item .product-item-infor {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    justify-content: space-between;
+}
+.product-item .product-item-infor .icon-coin {
+    color: rgb(235, 235, 52);
+}
+.product-item .product-item-infor .price-section {
+    display: flex;
+    align-items: center;
+}
+.product-item .product-item-createdDate {
+    font-size: 13px;
+}
+.product-item .btn-group {
+    margin-top: 5px;
+}
+.product-item .btn-group .btn {
+    font-size: 11px;
+    height: 40px;
+}
+.product-item .btn-group .btn.request {
+    background-color: #00b7eb;
+    background-image: linear-gradient(to bottom, #00b7eb 0%, #00a8dc 74%);
+    color: honeydew;
+}
+.product-item .btn-group .btn.sold {
+    background-color: #ffffff;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #d7e1ec 74%);
+}
+.product-item .btn-group .btn.detail {
+    background-color: #eee;
+    border-bottom: 1px solid #e2e2e2;
+    text-shadow: 0 1px 0 #fff;
+}

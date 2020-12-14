@@ -1,0 +1,17 @@
+.toy-list-page-wrapper .product-name{
+    color : #23a1d1;
+font-size: 13px;
+}
+.toy-list-page-wrapper .icon-ecoin{
+    color : rgb(235, 235, 52);
+    
+}
+.toy-list-page-wrapper .icon-edit{
+    color : #23a1d1;
+    font-size: 13px;
+}
+.toy-list-page-wrapper .iconStatus.new{
+    border-color : #23a1d1;
+    color: #23a1d1;
+    font-size: 13px;
+}

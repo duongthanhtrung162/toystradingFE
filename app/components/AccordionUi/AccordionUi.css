@@ -1,0 +1,318 @@
+.form-accordion-material {
+    border-bottom: 1px solid #d7e1ea;
+}
+.form-accordion-material .MuiPaper-root {
+    border: none;
+    box-shadow: none;
+}
+
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root {
+    flex-direction: row-reverse;
+    padding: 0;
+}
+/* .form-accordion-material .MuiPaper-root .MuiAccordionSummary-root.Mui-expanded {
+    background-color: #eee;
+    border-radius: 10px;
+} */
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root .MuiAccordionSummary-content {
+    margin: 0px;
+}
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root .MuiAccordionSummary-content .wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root .MuiAccordionSummary-content .wrapper.offer-id {
+    margin-right: 120px;
+}
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root .MuiAccordionSummary-content .wrapper span {
+    color: rgb(199, 195, 195);
+    margin-right: 5px;
+}
+.form-accordion-material .MuiPaper-root .MuiAccordionSummary-root .MuiAccordionSummary-content .wrapper.offer-status {
+    margin-right: 0px;
+    margin-left: 120px;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status {
+    padding: 0 5px;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.request {
+    color: #f85c1e;
+    border-radius: 6px;
+    background-color: rgba(248, 92, 30, 0.1);
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.request
+    .icon-status {
+    color: #f85c1e;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #f85c1e;
+    display: inline-block;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.accepted {
+    color: #03c3ec;
+    border-radius: 6px;
+    background-color: rgba(3, 195, 236, 0.1);
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.accepted
+    .icon-status {
+    color: #03c3ec;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #03c3ec;
+    display: inline-block;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.cancel {
+    color: #778699;
+    border-radius: 6px;
+    background-color: rgba(114, 128, 157, 0.15);
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiAccordionSummary-root
+    .MuiAccordionSummary-content
+    .wrapper.offer-status
+    .status.cancel
+    .icon-status {
+    color: #778699;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #778699;
+    display: inline-block;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root {
+    display: block;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header {
+    background-color: #f0f4f8;
+    display: flex;
+    width: 100%;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header
+    .title {
+    font-weight: bolder;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header
+    .sub-title {
+    color: #778699;
+    font-size: 14px;
+    margin-left: 400px;
+    font-weight: bolder;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .product-infor {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .product-infor
+    .infor {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .product-infor
+    .infor
+    img {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .product-infor
+    .infor
+    .name {
+    margin-left: 10px;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .product-infor
+    .price {
+    margin-left: 310px;
+    font-weight: bolder;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .person-infor {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .person-infor
+    .infor {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .person-infor
+    .infor
+    img {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .person-infor
+    .infor
+    .name {
+    margin-left: 10px;
+}
+
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header.btn 
+    .btn{
+        font-size: 10px;
+        height: 30px;
+        margin: 10px 5px ;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header.btn
+    .btn.cancel {
+        background-color: #eee;
+    border-bottom: 1px solid #e2e2e2;
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header.btn
+    .btn.accept, .btn.contact {
+        background-color: #00B7EB;
+    color: honeydew;
+    background-image: linear-gradient(to bottom, #00B7EB 0%,#00A8DC 74%);
+}
+.form-accordion-material
+    .MuiPaper-root
+    .MuiCollapse-container
+    .MuiCollapse-wrapper
+    .MuiCollapse-wrapperInner
+    .MuiAccordionDetails-root
+    .header.btn
+    .btn.rate {
+        background-color: #f8f85d;
+        color: #f07107;
+}

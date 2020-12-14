@@ -1,0 +1,44 @@
+.carousel-wrapper{
+	padding-top: 5px
+}
+ .carousel-wrapper .carousel-header {
+	 display: flex;
+	 margin-bottom: 15px;
+	 margin-left: 10px;
+}
+ .carousel-wrapper .carousel-header .arrow-wrapper {
+	 margin-left: auto;
+	 display: flex;
+	 align-items: center;
+	 color: red
+}
+  .carousel-wrapper .carousel-header .arrow-wrapper .btn-pre {
+	 cursor: pointer;
+}
+ .carousel-wrapper .carousel-header .arrow-wrapper .btn-pre.disabled {
+	 color: gray
+}
+ .carousel-wrapper .carousel-header .arrow-wrapper .btn-next {
+	 cursor: pointer;
+}
+ .carousel-wrapper .carousel-header .arrow-wrapper .btn-next.disabled {
+	 color: gray
+}
+ .carousel-wrapper .slick-arrow {
+	 background-color: black;
+}
+ 
+ .carousel-wrapper .slick-list .slick-track {
+	 display: flex !important;
+     margin-left: 0;
+     padding-bottom: 10px;
+}
+ .carousel-wrapper .slick-list .slick-track .slick-slide {
+	 padding: 0 10px;
+	 height: auto;
+}
+ .carousel-wrapper .slick-list .slick-track .slick-slide > div {
+	 height: 100%;
+} 
+
+ 

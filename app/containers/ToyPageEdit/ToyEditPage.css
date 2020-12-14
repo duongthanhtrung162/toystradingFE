@@ -1,0 +1,98 @@
+.toy-edit-page.wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.toy-edit-page.wrapper .header-page{
+    font-size: 30px;
+    
+}
+.toy-edit-page.wrapper .form-section{
+    display: flex;
+    
+}
+.toy-edit-page.wrapper .product-name{
+    width: 100%;
+}
+.toy-edit-page.wrapper .product-sex{
+    width: 20%;
+    margin-right: 15px;
+}
+.toy-edit-page.wrapper .product-category{
+    width: 100%;
+}
+.toy-edit-page.wrapper .product-tag{
+    width: 70%;
+}
+.toy-edit-page.wrapper .product-age{
+    width: 20%;
+    margin-right: 15px;
+}
+.toy-edit-page.wrapper .product-city{
+    width: 20%;
+    margin-right: 15px;
+
+}
+.toy-edit-page.wrapper .product-price{
+    width: 20%;
+    margin-right: 15px;
+
+}
+.toy-edit-page.wrapper .product-condition{
+    width: 20%;
+
+}
+.toy-edit-page.wrapper .product-reference{
+    width: 40%;
+    margin-right: 15px;
+
+}
+.toy-edit-page.wrapper .product-description{
+    width: 50%;
+    height: 100px;
+    margin-top: 30px;
+}
+.toy-edit-page.wrapper .product-image{
+    position: relative;
+}
+.toy-edit-page.wrapper .product-image img{
+    height: 120px;
+   
+    width: 100%;
+    object-fit: contain;
+}
+.toy-edit-page.wrapper .product-image .icon-delete{
+    position: absolute;
+    cursor: pointer;
+   font-size: 17px;
+    left:47%;
+    color: red;
+}
+.toy-edit-page.wrapper .btn-upload-photo{
+    background-color: #00b7eb;
+    background-image: linear-gradient(to bottom, #00b7eb 0%, #00a8dc 74%);
+    color: honeydew;
+    font-size: 13px;
+    margin-top: 30px;
+}
+.toy-edit-page.wrapper .btn-cancel{
+    background-color: #eee;
+    border-bottom: 1px solid #e2e2e2;
+    margin-right: 15px;
+    width: 122px;
+    height: 45px;
+    font-size: 13px;
+
+}
+.toy-edit-page.wrapper .btn-save{
+    background-color: #00b7eb;
+    background-image: linear-gradient(to bottom, #00b7eb 0%, #00a8dc 74%);
+    color: honeydew;
+    width: 122px;
+    font-size: 13px;
+
+    height: 45px;
+    
+}
+.toy-edit-page.wrapper .form-section.btn{
+justify-content: center;    
+}

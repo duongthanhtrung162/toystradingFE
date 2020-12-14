@@ -1,0 +1,22 @@
+.login-page-wrapper .title{
+    font-size: 20px;
+}
+.login-page-wrapper .btn-login{
+    margin-top:10px
+    
+}
+.login-page-wrapper .btn-login button{
+    background-color: #00B7EB;
+    background-image: linear-gradient(to bottom, #00B7EB 0%,#00A8DC 74%); 
+    width: 100%;
+    color: honeydew;
+    height: 40px;
+}
+.login-page-wrapper .sub-title{
+    margin-top: 20px;
+}
+.login-page-wrapper{
+    margin-top:  30px;
+    margin-bottom:  30px;
+
+}

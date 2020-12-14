@@ -1,0 +1,31 @@
+.nav-header.MuiPaper-root {
+    background-color: #00B7EB;
+    background-image: linear-gradient(to bottom, #00B7EB 0%,#00A8DC 74%);
+       background-repeat: repeat-x;
+       border:1px solid #0099cd;
+    min-height: 40px;    
+    height: 40px;
+}
+.nav-header .nav-list{
+    display: flex;
+    list-style: none;
+    height: 100%;
+    justify-content: center;
+}
+.nav-header .nav-list .nav-item{
+    height: 100%;
+    color:   #fff;
+    display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+
+  font-size: 14px;
+}
+.nav-header .nav-list .nav-item:hover{
+    background-color: rgb(88, 151, 235);
+}
+.nav-header .nav-list .nav-item a{
+    color:   #fdfdfd;
+    
+}

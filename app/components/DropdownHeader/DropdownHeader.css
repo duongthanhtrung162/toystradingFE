@@ -1,0 +1,9 @@
+.dropdown-list{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+ .menu-item.ant-dropdown-menu-item-active{
+    background-color: #ffffff;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #d7e1ec 74%);
+}

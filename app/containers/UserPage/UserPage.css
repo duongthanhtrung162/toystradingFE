@@ -1,0 +1,48 @@
+.user-page-wrapper{
+    margin-bottom: 20px;
+}
+.user-page-wrapper .avatar {
+    text-align: center;
+    margin-right: 10px;
+}
+.user-page-wrapper .user-page-main {
+    display: flex;
+    padding-left: 20px;
+    margin-top: 15px;
+}
+.user-page-wrapper .user-page-main .user-account {
+    padding: 7px;
+    width: 285px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #d7e1ec 74%);
+}
+.user-page-wrapper .user-page-main .user-account .infor {
+    line-height: 2;
+    font-size: 13px;
+    font-weight: 500;
+}
+.user-page-wrapper .infor .infor-right .MuiRating-root {
+    font-size: 16px;
+}
+.user-page-wrapper .toy-list {
+    margin-top: 10px;
+}
+.user-page-wrapper .toy-list .title {
+    font-size: 26px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    
+    color: #444;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.user-page-wrapper .toy-list .list {
+    
+    display: flex;
+    flex-wrap: wrap;
+}

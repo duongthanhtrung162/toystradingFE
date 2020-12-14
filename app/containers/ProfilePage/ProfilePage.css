@@ -1,0 +1,292 @@
+.profile-page-wrapper {
+    padding-left: 15px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-list {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 20px 0 0;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-list .react-tabs__tab {
+    margin: 0px 10px;
+  
+    font-size: 14px;
+    color: #778699;
+    position: relative;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-list .react-tabs__tab--selected {
+    color: #2a2c30;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-list .react-tabs__tab--selected::after {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #f85c1e;
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    margin-left: -2px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper {
+    margin-top: 41px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .left-column-wrapper {
+    flex: 0 0 190px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .left-column-wrapper
+    .support-formats-text {
+  
+    font-size: 12px;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #778699;
+    margin-top: 15px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .left-column-wrapper .avatar-wrapper {
+    width: 180px;
+    height: 180px;
+    border-radius: 23.1px;
+    overflow: hidden;
+    position: relative;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .left-column-wrapper
+    .avatar-wrapper
+    .ant-image
+    img {
+    height: 100%;
+    object-fit: cover;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .left-column-wrapper
+    .avatar-wrapper
+    .btn-upload-photo {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2a2c30;
+    
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: white;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .left-column-wrapper
+    .avatar-wrapper
+    .ant-image {
+    height: 100%;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .right-column-wrapper {
+    flex: 1;
+    margin-left: 33px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .user-name-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .user-name-wrapper
+    .rate-wrapper {
+    margin-left: 20px;
+    height: 26px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .right-column-wrapper .ecoin {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .ecoin
+    .icon-coin {
+    color: yellow;
+    font-size: 30px;
+    margin-right: 5px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .ecoin
+    .ecoin-count {
+    
+    font-size: 20px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .right-column-wrapper .btn-edit {
+    margin-bottom: 40px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .btn-edit
+    .MuiButtonBase-root {
+  
+    font-size: 13px;
+    width: 142px;
+    background: #706767;
+    color: white;
+    height: 45px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .main-info-wrapper
+    .info-item {
+    
+    font-size: 15px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: #2a2c30;
+    margin-bottom: 38px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .main-info-wrapper
+    .info-item
+    .key {
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #778699;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .personal-info-wrapper .right-column-wrapper .editting-form {
+    width: 50%;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .editting-form
+    .btn-form {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .editting-form
+    .btn-form
+    .MuiButton-root {
+    width: 122px;
+    height: 45px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .editting-form
+    .btn-form
+    .btn-cancel {
+        background-color: #eee;
+        border-bottom: 1px solid #e2e2e2;
+        
+    
+    font-size: 13px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .personal-info-wrapper
+    .right-column-wrapper
+    .editting-form
+    .btn-form
+    .btn-save {
+    background-color: #00b7eb;
+    background-image: linear-gradient(to bottom, #00b7eb 0%, #00a8dc 74%);
+    color: honeydew;
+    
+    font-size: 13px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .change-password-wrapper {
+    margin: 50px 250px;
+}
+.profile-page-wrapper .react-tabs .react-tabs__tab-panel .change-password-wrapper .form-change-password .btn-form {
+    margin-top: 30px;
+    text-align: center;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .change-password-wrapper
+    .form-change-password
+    .btn-form
+    .btn-save {
+    color: white;
+    background-color: black;
+ 
+    font-size: 13px;
+}
+.profile-page-wrapper
+    .react-tabs
+    .react-tabs__tab-panel
+    .change-password-wrapper
+    .form-change-password
+    .btn-form
+    .MuiButton-root {
+    width: 122px;
+    height: 45px;
+}

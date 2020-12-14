@@ -1,0 +1,14 @@
+.footer-column ul li {
+    color: #fff;
+    list-style: none;
+}
+.footer-column ul {
+    padding: 0;
+
+}
+.footer-column .footer-column-title{
+    color: #6c757d;
+    margin-bottom: 15px;
+
+
+}

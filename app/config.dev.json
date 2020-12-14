@@ -1,0 +1,10 @@
+{
+  "toystrading": {
+    "host": "https://toystrading.herokuapp.com/v1/",
+    "api": {
+      "login": "login",
+      "user": "users",
+      "category": "category"
+    }
+  }
+}

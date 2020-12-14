@@ -1,0 +1,31 @@
+.menu-profile-wrapper .header {
+   margin-bottom: 30px;
+}
+.menu-profile-wrapper .header .menu-item  span{
+   
+    font-size: 17px;
+    margin: 0 2px;
+}
+.menu-profile-wrapper .header .menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: black;
+}
+.menu-profile-wrapper .menu-list .menu-item span{
+    
+    font-size: 17px;
+    margin: 0 4px;
+}
+.menu-profile-wrapper .menu-list .menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: black;
+margin-bottom: 10px;
+}
+.menu-profile-wrapper .menu-list .menu-item .count{
+    color: #778699;
+    margin-left: 100px;
+font-size: 14px;
+}

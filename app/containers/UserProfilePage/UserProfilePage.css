@@ -1,0 +1,12 @@
+.user-profile-wrapper{
+    display: flex;
+}
+.user-profile-wrapper .left-column-section{
+    border-right: 1px solid #d7e1ea;
+    padding-top: 20px;
+}
+.user-profile-wrapper .right-column-section{
+    padding-top: 20px;
+    flex: 1 1;
+    padding-left: 25px;
+}

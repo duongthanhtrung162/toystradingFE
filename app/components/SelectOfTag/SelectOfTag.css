@@ -1,0 +1,30 @@
+.select-field-control {
+    width: 100%;
+    height: 50px;
+  }
+  .select-field-control .MuiFormLabel-root {
+    font-size: 13px;
+  }
+  .select-field-control .MuiInputBase-root{
+    height: 100%;
+  }
+  .select-field-control .MuiInputBase-root input {
+  font-size: 13px;
+  }
+  .select-field-control .MuiInputBase-root  .MuiSelect-root {
+    font-size: 13px;
+    }
+    .MuiMenu-paper .MuiListItem-root{
+      font-size: 13px;
+    }
+  .form-selectoftag-material {
+    margin-top: 30px;
+  }
+  
+  .form-selectoftag-material .select-field-control.locked div {
+    background-color: #f0f4f8;
+  }
+  .form-selectoftag-material .select-field-control.locked {
+    pointer-events: none;
+  }
+  
