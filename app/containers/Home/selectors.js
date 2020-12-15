@@ -20,11 +20,7 @@ const makeSelectHome = () =>
     selectHomeDomain,
     substate => substate,
   );
-  const makeSelectCategory = () =>
-  createSelector(
-    selectHomeDomain,
-    substate => substate,
-  );
+  
 
 export default makeSelectHome;
-export { selectHomeDomain ,makeSelectCategory};
+export { selectHomeDomain };

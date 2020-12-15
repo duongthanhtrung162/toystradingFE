@@ -1,6 +1,6 @@
 /*
  *
- * Home actions
+ * HeaderNew actions
  *
  */
 
@@ -13,5 +13,10 @@ export function defaultAction(name, value) {
     value
   };
 }
+export function getCategoryList(data) {
+  return {
+    type: constant.ACTION_GET_CATEGORY,
+    payload: data
 
-
+  };
+}

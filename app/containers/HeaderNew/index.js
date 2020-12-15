@@ -1,30 +1,54 @@
-import React, {useEffect} from 'react';
-import { Row, Col } from 'antd';
+/**
+ *
+ * HeaderNew
+ *
+ */
+
+import React, { memo, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { getAuthToken } from '../../utils/helper';
+
+
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import makeSelectHeaderNew from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+import * as PageActions from './actions';
+
+import './HeaderNew.css';
 import SearchBar from 'material-ui-search-bar';
 import { PhoneOutlined, BellOutlined, EuroCircleOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import logo from './logo.jpg';
-import './header.css';
 import Button from '@material-ui/core/Button';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
-import { getAuthToken } from '../../utils/helper';
 
-//component
-import DropdownHeader from '../DropdownHeader/index.js';
+import DropdownHeader from '../../components/DropdownHeader/index.js';
 import { menuUserLogin, menuUserLogout } from './MenuDropdownHeader';
-import NavHeader from '../NavHeader/index';
-import AppWrapper from '../AppWrapper/index';
-
-
-function Header(props) {
-  // const stateSelector = createStructuredSelector({
-  //   selectHome: makeSelectCategory(),
-  // });
-  
-
+import NavHeader from '../../components/NavHeader/index';
+import AppWrapper from '../../components/AppWrapper/index';
+import { fetchActionsWithArrayOfIdentifiedRecordsResponse } from 'react-admin';
+export function HeaderNew(props) {
+  useInjectReducer({ key: 'headerNew', reducer });
+  useInjectSaga({ key: 'headerNew', saga });
+ const {categoryList}= props.headerNew;
+ console.log(categoryList);
+ 
+  useEffect(() => {
+    (async() => {
+      await  props.getCategoryList(); 
+    })();
+  }, []);
 
   return (
     <div className="header-wrapper">
@@ -80,9 +104,34 @@ function Header(props) {
           </Grid>
         </AppWrapper>
       </div>
-      <NavHeader categoryList={props.categoryList} />
+      <NavHeader categoryList={categoryList} />
     </div>
   );
 }
 
-export default Header;
+HeaderNew.propTypes = {
+};
+
+const mapStateToProps = createStructuredSelector({
+  headerNew: makeSelectHeaderNew(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getCategoryList : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getCategoryList({ resolve, reject }));
+      });
+  }
+}
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(HeaderNew);

@@ -17,7 +17,7 @@ import { clearAllLocalStorage } from '../../utils/helper';
 
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
+import HeaderNew from '../HeaderNew/Loadable';
 import Footer from 'components/Footer';
 import Home from '../Home/Loadable';
 import HomeAdmin from '../HomeAdmin/Loadable';
@@ -29,7 +29,8 @@ import ProductDetailPage from '../ProductDetailPage/Loadable';
 import UserProfilePage from '../UserProfilePage/Loadable';
 import ToyPageEdit from '../ToyPageEdit/Loadable';
 import CategoryPage from '../CategoryPage/Loadable';
-
+import { makeSelectCategory } from '../../containers/Home/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 
 import routesLinks from './routesLinks';
 import GlobalStyle from '../../global-styles';
@@ -43,15 +44,11 @@ const AppWrapper = styled.div`
 
 export default function App() {
   let location = useLocation();
-
   const onLogout = async () =>
   {
     await clearAllLocalStorage();
     history.push('/');
   }
-  
-
-  
   return (
     <SnackbarProvider maxSnack={2} anchorOrigin={{
       vertical: 'top',
@@ -66,7 +63,7 @@ export default function App() {
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       {
-        location.pathname.includes('/homeAdmin') ? <div></div> : <Header logout={onLogout}/>
+        location.pathname.includes('/homeAdmin') ? <div></div> : <HeaderNew  logout={onLogout}/>
 
       }
       <Switch>
@@ -86,7 +83,7 @@ export default function App() {
         <Route  exact path="" component={NotFoundPage} />
       </Switch>
       { 
-      
+
         location.pathname.includes('/homeAdmin') ? <div></div> : <Footer />
 
       }
