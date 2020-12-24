@@ -101,7 +101,7 @@ function Slider(props) {
       <Viewer
         visible={visible}
         onClose={() => { setVisible(false); }}
-        images={props.items}
+        images={props.itemView}
         rotatable={false}
         activeIndex={currentIndex}
       />

@@ -42,6 +42,7 @@ function SelectOfTag(props) {
       multiple
       id="checkboxes-tags-demo"
       options={props.options}
+      value = {props.value}
       disableCloseOnSelect
       classes={{
         option: classes.option,
@@ -51,7 +52,7 @@ function SelectOfTag(props) {
      )}
      onChange={props.onChange}
      limitTags={3}
-      getOptionLabel={(option) => option.title}
+      getOptionLabel={(option) => option.value}
       renderOption={(option, { selected }) => (
         <React.Fragment>
           <Checkbox
@@ -60,7 +61,7 @@ function SelectOfTag(props) {
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.title}
+          {option.value}
         </React.Fragment>
       )}
       renderInput={(params) => (

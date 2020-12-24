@@ -4,10 +4,11 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION } from './constants';
+import { DEFAULT_ACTION ,DEFAULT_ACTION_TAG} from './constants';
 
 export const initialState = {
-  categoryList : []
+  categoryList : [],
+  tagList : []
 
 };
 
@@ -17,7 +18,10 @@ const headerNewReducer = (state = initialState, action) =>
     switch (action.type) {
       case DEFAULT_ACTION:
         state.categoryList = action.value.data;
-        return state;
+        return {...state};
+     case DEFAULT_ACTION_TAG:
+        state.tagList = action.value.data;
+        return {...state};
     }
   });
 

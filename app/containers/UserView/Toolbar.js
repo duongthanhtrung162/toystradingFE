@@ -41,14 +41,6 @@ const Toolbar = ({ className, ...rest }) => {
         <Button className={classes.exportButton}>
           Export
         </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
-          startIcon={<AddIcon />}
-
-        >
-          Thêm danh mục
-        </Button>
       </Box>
       {/* <Box mt={3}>
         <Card>

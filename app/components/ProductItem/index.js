@@ -4,7 +4,8 @@
  *
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import moment from 'moment';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,8 +22,11 @@ import TextTruncate from 'react-text-truncate';
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import LocalAtmTwoToneIcon from '@material-ui/icons/LocalAtmTwoTone';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import isEmpty from 'lodash';
+import routesLinks from '../../containers/App/routesLinks';
+import { Link, useHistory } from 'react-router-dom';
 
-import './ProductItem.css';
+import './ProductItem.css'
 import ModalUi from '../ModalUi/index';
 const useStylesFisrt = makeStyles({
   root: {
@@ -65,9 +69,22 @@ const useStylesSecond = makeStyles((theme) => ({
 function ProductItem({ isProductUser, item, marginLR, marginTB, style }) {
   const classesFirst = useStylesFisrt();
   const classesSecond = useStylesSecond();
- const [openModal,setOpenModal] = useState(false);
-  const handleOnClick = () => {
-    console.log('productitem');
+  const [openModal, setOpenModal] = useState(false);
+  let history = useHistory();
+
+  const handleOnClick = (productId) => {
+    history.push(`/product-detail/${productId}`);
+  };
+  
+  const getUrlImage = (assets) => {
+    const path = require('../../containers/HeaderNew/imageDefault.png');
+    let temp = '';
+    if (assets.length > 0) {
+      temp = assets[0].url;
+    } else {
+      temp = path;
+    }
+    return temp;
   }
   return (
     <div className="product-item"
@@ -86,6 +103,7 @@ function ProductItem({ isProductUser, item, marginLR, marginTB, style }) {
               <div className={classesSecond.details}>
 
                 <CardMedia
+                  component="img"
                   className={classesSecond.cover}
                   image={item.original}
                   title="Live from space album cover"
@@ -104,44 +122,46 @@ function ProductItem({ isProductUser, item, marginLR, marginTB, style }) {
             </Card>
           )
           : (
-            <Paper variant="outlined" className={classesFirst.root} onClick={handleOnClick} >
-              <CardActionArea>
+            <Paper variant="outlined" className={classesFirst.root}  >
+              <CardActionArea onClick={() => handleOnClick(item.id)}>
                 <CardMedia
                   className={classesFirst.media}
-                  image={item.original}
+                  image={getUrlImage(item.assets)}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
-                  <Typography gutterBottom component="h6" className={classesFirst.productName}>
-                    toy 1
+                  <Typography gutterBottom component="h6" className={classesFirst.productName} >
+                    {item.toyName}
                   </Typography>
                   <TextTruncate
                     className={'description'}
                     line={3}
                     element="span"
                     truncateText="…"
-                    text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when ssssan unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                    text={item.description}
                   />
                   <Typography variant="body2" color="textSecondary" component="div" className='product-item-infor'>
                     <div className="price-section">
                       <LocalAtmTwoToneIcon className="icon-coin" />
-                      <div className="product-price">10</div>
+                      <div className="product-price">{item.ecoin}</div>
                     </div>
                     <Typography variant="body2" color="textSecondary" component="div" className='product-item-createdDate'>
-                      <div className="product-createdDate">10 ngày trước</div>
+                      {/* <div className="product-createdDate">10 ngày trước</div> */}
                     </Typography>
                   </Typography>
 
                 </CardContent>
-                <CardActions className="btn-group">
+               
+              </CardActionArea>
+              <CardActions className="btn-group">
                   {
                     true ? (
-                      <Button size="small" 
-                      variant="contained"
-                       className="btn request" 
-                       startIcon={<FavoriteTwoToneIcon />}
-                       onClick={()=> setOpenModal(true)}
-                       >
+                      <Button size="small"
+                        variant="contained"
+                        className="btn request"
+                        startIcon={<FavoriteTwoToneIcon />}
+                        onClick={() => setOpenModal(true)}
+                      >
                         Yêu cầu trao đổi
                       </Button>
                     ) : (
@@ -151,19 +171,19 @@ function ProductItem({ isProductUser, item, marginLR, marginTB, style }) {
                       )
                   }
 
-                  <Button size="small" variant="contained" className="btn detail">
+                  <Button size="small" variant="contained" 
+                  className="btn detail" onClick={() => handleOnClick(item.id)}>
                     Chi tiết
                  </Button>
                 </CardActions>
-              </CardActionArea>
             </Paper>
           )
       }
       <ModalUi open={openModal}
-      onCancelClick={()=> setOpenModal(false)}
-      title={'Yêu cầu trao đổi'}
-      content={'Bạn có thực sự muốn giao dịch đồ chơi này?'}
-      labelDone="Yêu cầu"
+        onCancelClick={() => setOpenModal(false)}
+        title={'Yêu cầu trao đổi'}
+        content={'Bạn có thực sự muốn giao dịch đồ chơi này?'}
+        labelDone="Yêu cầu"
       //onCancelClick={()=> setOpenModal(false)}
       />
     </div>

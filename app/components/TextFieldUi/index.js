@@ -77,7 +77,7 @@ function TextFieldUi(props) {
             <TextField
               //autoComplete={'new-password'}
               InputProps={{ disableUnderline: true }}
-              inputProps={props.type === 'number' && props.name ==='product-price' ? { min: "0", max: "50", step: "1" } : {}}
+              inputProps={props.type === 'number' && props.name ==='ecoin' ? { min: "0", step: "1" } : {}}
               InputLabelProps={props.shrink ? {
                 shrink: props.shrink
               } : {}}
@@ -100,6 +100,7 @@ function TextFieldUi(props) {
               value={props.value}
               placeholder={props.placeholder}
               disabled={props.disabled}
+              min="0"
               onKeyDown={props.type === 'number' ? checkE : props.keyPress}
               InputProps={props.InputProps ? ({
                 startAdornment: <InputAdornment position="start">

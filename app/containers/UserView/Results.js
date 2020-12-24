@@ -148,14 +148,7 @@ const Results = ({ className, customers, ...rest }) => {
                   </TableCell>
                   <TableCell>
                     
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.Button}
-                            startIcon={<EditIcon></EditIcon>}
-                        >
-                            Sửa
-                        </Button>      
+           
                         <Button
                         variant="contained"
                         color="secondary"

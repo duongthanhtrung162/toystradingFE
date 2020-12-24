@@ -34,7 +34,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import routesLinks from './routesLinks';
 import GlobalStyle from '../../global-styles';
-
+import PrivateRoute from './PrivateRoute.js';
 const AppWrapper = styled.div`
   margin: 0 auto;
   display: flex;
@@ -74,11 +74,11 @@ export default function App() {
         <Route exact path={routesLinks.user} component={UserPage} />
         <Route exact path={routesLinks.category} component={CategoryPage} />
         <Route exact path={routesLinks.productDetail} component={ProductDetailPage} />
-        <Route  path={routesLinks.userProfile} component={UserProfilePage} />
+        <PrivateRoute    path={routesLinks.userProfile} component={UserProfilePage} />
         <Route   path={`${routesLinks.dashboardPage}/toy/add`} 
              component={ToyPageEdit}
             />
-        <Route  path={routesLinks.homeAdmin} component={HomeAdmin} />
+        <PrivateRoute    path={routesLinks.homeAdmin} component={HomeAdmin} />
         <Route  exact path="/features" component={FeaturePage} />
         <Route  exact path="" component={NotFoundPage} />
       </Switch>

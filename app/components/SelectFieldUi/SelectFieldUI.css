@@ -27,4 +27,9 @@
   .form-select-material .select-field-control.locked {
     pointer-events: none;
   }
-  
+ 
+  .form-select-material .form-field-error {
+    margin-top: 5px;
+    color: red;
+    font-size: 12px;
+  }

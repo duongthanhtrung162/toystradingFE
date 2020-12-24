@@ -21,7 +21,11 @@ function TextAreaField(props) {
     )}
     >
       <TextareaAutosize
+
       style={{width: '100%', height: '100%'}}
+      onBlur={props.onBlur}
+       onChange={props.onChange}  
+           value={props.value}
        className={ClassNames(
         'textarea-input-control')}
         aria-label="minimum height"

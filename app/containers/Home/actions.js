@@ -13,5 +13,11 @@ export function defaultAction(name, value) {
     value
   };
 }
+export function getNewestToy(data) {
+  return {
+    type: constant.ACTION_GET_NEWEST_TOY,
+    payload: data
 
+  };
+}
 

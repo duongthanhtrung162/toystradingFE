@@ -1,13 +1,23 @@
 /*
  *
- * ToyPageEdit actions
+ * HeaderNew actions
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as constant from './constants'
 
-export function defaultAction() {
+export function defaultAction(name, value) {
   return {
-    type: DEFAULT_ACTION,
+    type: constant.DEFAULT_ACTION,
+    name,
+    value
+  };
+}
+export function addToy(data) {
+  
+  return {
+    type: constant.ADD_TOY,
+    payload: data
+
   };
 }

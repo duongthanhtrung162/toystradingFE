@@ -4,10 +4,18 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as constant  from './constants';
 
-export function defaultAction() {
+export function defaultAction(name, value) {
   return {
-    type: DEFAULT_ACTION,
+    type: constant.DEFAULT_ACTION,
+    name,
+    value
+  };
+}
+export function filterToy(data) {
+  return {
+    type: constant.FILTER_TOY,
+    payload: data
   };
 }

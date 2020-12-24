@@ -1,0 +1,27 @@
+.form-categoryView .btn-cancel{
+    background-color: #eee;
+    border-bottom: 1px solid #e2e2e2;
+    margin-right: 15px;
+    width: 122px;
+    height: 40px;
+    font-size: 13px;
+
+}
+.form-categoryView .btn-save{
+    background-color: #00b7eb;
+    background-image: linear-gradient(to bottom, #00b7eb 0%, #00a8dc 74%);
+    color: honeydew;
+    width: 122px;
+    font-size: 13px;
+
+    height: 40px;
+    
+}
+.form-categoryView .form-section.btn{
+    margin-top: 10px;
+justify-content: center;
+}
+.categoryView-title {
+    font-size: 20px;
+    font-weight: bolder;
+}

@@ -45,17 +45,17 @@ const items = [
   {
     href: `${routesLinks.homeAdmin}/users`,
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Users'
   },
   {
-    href: '/app/products',
+    href: `${routesLinks.homeAdmin}/categories`,
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: 'Danh mục'
   },
   {
-    href: '/app/settings',
+    href: `${routesLinks.homeAdmin}/tags`,
     icon: SettingsIcon,
-    title: 'Settings'
+    title: 'Tags'
   },
   {
     href: '/login',

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -26,7 +26,7 @@ import './HeaderNew.css';
 import SearchBar from 'material-ui-search-bar';
 import { PhoneOutlined, BellOutlined, EuroCircleOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import logo from './logo.jpg';
 import Button from '@material-ui/core/Button';
@@ -37,16 +37,23 @@ import DropdownHeader from '../../components/DropdownHeader/index.js';
 import { menuUserLogin, menuUserLogout } from './MenuDropdownHeader';
 import NavHeader from '../../components/NavHeader/index';
 import AppWrapper from '../../components/AppWrapper/index';
-import { fetchActionsWithArrayOfIdentifiedRecordsResponse } from 'react-admin';
+import routesLinks from '../App/routesLinks';
+
 export function HeaderNew(props) {
   useInjectReducer({ key: 'headerNew', reducer });
   useInjectSaga({ key: 'headerNew', saga });
- const {categoryList}= props.headerNew;
- console.log(categoryList);
- 
+  let history = useHistory();
+
+  const categoryList = props.headerNew.categoryList;
+  const [searchKey, setSearchKey] = useState('');
+
   useEffect(() => {
+    
     (async() => {
-      await  props.getCategoryList(); 
+     await   props.getCategoryList();
+     await   props.getTagList();
+
+     //setCategoryList(result.data.data.data); 
     })();
   }, []);
 
@@ -83,8 +90,13 @@ export function HeaderNew(props) {
             </Grid>
             <Grid item xs={6} className="search-input">
               <SearchBar
-                // onChange={() => console.log('onChange')}
-                // onRequestSearch={() => console.log('onRequestSearch')}
+                onChange={(value) => setSearchKey(value)}
+                 onRequestSearch={() => {
+                   if(searchKey !== ''){
+                    history.push(`${routesLinks.category}?toyName=${searchKey}`);
+
+                   }
+                  }}
                 placeholder="Tìm kiếm"
                 className="search-input-form"
               />
@@ -122,7 +134,12 @@ function mapDispatchToProps(dispatch) {
       return new Promise((resolve, reject) => {
         return dispatch(PageActions.getCategoryList({ resolve, reject }));
       });
-  }
+  },
+  getTagList : async () => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.getTagList({ resolve, reject }));
+    });
+}
 }
 }
 

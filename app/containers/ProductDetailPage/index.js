@@ -4,11 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -34,6 +33,8 @@ import Slide from '../../components/Slider/index';
 import MediumText from '../../components/MediumText/index';
 import ProductItem from '../../components/ProductItem/index';
 import Carousel from '../../components/Carousel/index';
+import { Link, useHistory,useLocation, useParams } from 'react-router-dom';
+import * as PageActions from './actions';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -64,44 +65,100 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-const images = [
-  {
-    src: 'https://picsum.photos/id/1018/1000/600/',
-    original: 'https://picsum.photos/id/1018/1000/600/'
 
-  },
-  {
-    src: 'https://picsum.photos/id/1015/1000/600/',
-    original: 'https://picsum.photos/id/1015/1000/600/',
 
-  },
-  {
-    src: 'https://picsum.photos/id/1019/1000/600/',
-    original: 'https://picsum.photos/id/1019/1000/600/',
-
-  },
-  {
-    src: 'https://picsum.photos/id/1019/1000/600/',
-    original: 'https://picsum.photos/id/1019/1000/600/',
-
-  },
-  {
-    src: 'https://p0ct8ommu0.vcdn.com.vn/media/wysiwyg/homepage/0-12TH.jpg',
-    original: 'https://picsum.photos/id/1019/250/150/',
-  },
-  {
-    src: 'https://p0ct8ommu0.vcdn.com.vn/media/wysiwyg/homepage/0-12TH.jpg',
-    original: 'https://picsum.photos/id/1019/250/150/',
-  },
-  {
-    src: 'https://p0ct8ommu0.vcdn.com.vn/media/wysiwyg/homepage/0-12TH.jpg',
-    original: 'https://picsum.photos/id/1019/250/150/',
-  }
-];
-
-export function ProductDetailPage() {
+export function ProductDetailPage(props) {
   useInjectReducer({ key: 'productDetailPage', reducer });
   useInjectSaga({ key: 'productDetailPage', saga });
+  
+  const [toy, setToy] = useState({});
+
+  let history = useHistory();
+  let location = useLocation();
+  let { productId } = useParams();
+
+  const images = [
+    {
+      original: require('../../containers/HeaderNew/imageDefault.png')
+     
+    }
+  ]
+  const imagesView = [
+    {
+      src: require('../../containers/HeaderNew/imageDefault.png')
+     
+    }
+  ]
+ const getImageToy = (assets) => {
+   let image = [];
+   if(assets.length > 0){
+     assets.map((item, index) =>{
+      image.push({original : item.url})
+     })
+   }else {
+    image.push({original : require('../../containers/HeaderNew/imageDefault.png')})
+   }
+   return image;
+ }
+
+ const getImageView = (assets) => {
+  let image = [];
+  if(assets.length > 0){
+    assets.map((item, index) =>{
+     image.push({src : item.url})
+    })
+  }else {
+   image.push({src : require('../../containers/HeaderNew/imageDefault.png')})
+  }
+  return image;
+ }
+
+  const renderCity = (city) => {
+    switch(city) {
+     case "HN":
+      return "Hà Nội";
+      case "HCM":
+      return "Hồ Chí Minh";
+      case "CT":
+      return "Cần Thơ";
+      case "HP":
+      return "Hải Phòng";
+      case "DN":
+      return "Đà Nẵng";
+     
+     default:
+      return "";
+    }
+   }
+   const renderAge = (age) => {
+    switch(age) {
+     case "0":
+      return "0-12 tháng";
+      case "13":
+      return "1-3 tuổi";
+      case "46":
+      return "Cần Thơ";
+      case "4-6 tuổi":
+      return "6-11 tuổi";
+      case "12":
+      return "12 tuổi trở lên";
+     default:
+      return "";
+    }
+   }
+
+   useEffect(() => {
+    (async() => {
+      await props.getDetailToy(productId)
+      .then((rs) => {
+        
+        setToy(rs.data.data);
+    })
+    .catch((err) => {
+    });
+     })();
+
+  }, [location]);
 
   return (
     <div className="product-detail-page">
@@ -109,7 +166,7 @@ export function ProductDetailPage() {
         <div className="product-detail-main">
           <div className="product-detail-section">
             <div className="product-infor-left-column">
-              <Slide items={images} isGallery />
+              <Slide items={toy.assets ? getImageToy(toy.assets) : images} isGallery itemView={toy.assets ? getImageView(toy.assets) : imagesView}/>
               <div className="product-details">
             <MediumText mbNumber={15} style={{ textAlign: 'left', fontSize: '25px' }} className="subTitle-detail">
               Thông tin chi tiết
@@ -117,23 +174,35 @@ export function ProductDetailPage() {
             <div className="product-detail-table">
               <div className="table-row">
                 <div className="sub-title">Giới tính</div>
-                <div className="content">Nam</div>
+                <div className="content">{
+                  toy.sex === "trai" ? "Bé trai" : "Bé gái"
+                }</div>
               </div>
               <div className="table-row">
                 <div className="sub-title">Độ tuổi</div>
-                <div className="content">1 - 3 tuổi</div>
+                <div className="content">{
+                  renderAge(toy.age)
+                }</div>
               </div>
               <div className="table-row">
                 <div className="sub-title">Khu vực</div>
-                <div className="content">Tphcm</div>
+                <div className="content">{
+                 renderCity(toy.city)
+                }</div>
               </div>
               <div className="table-row">
                 <div className="sub-title">Tình trạng</div>
-                <div className="content">Đã qua sử dụng</div>
+                <div className="content">
+                  {
+                    toy.condition === "M" ? "Còn mới" : "Đã sử dụng"
+                  }
+                </div>
               </div>
               <div className="table-row">
                 <div className="sub-title">Mô tả</div>
-                <div className="content">còn mới</div>
+                <div className="content">{                
+                    toy.description
+                }</div>
               </div>
               <div className="table-row">
                 <div className="sub-title">Link tham khảo</div>
@@ -142,22 +211,22 @@ export function ProductDetailPage() {
               <div className="table-row">
                 <div className="sub-title">Từ khóa</div>
                 <div className="content tag-list">
-                  {images.map((tagItem, index) => {
+                  {toy.tag_toys && toy.tag_toys.map((tagItem, index) => {
                     return (
                       <Chip
-                        label={'basiccccccsssssssssssssssssssssscc'}
-                        //onClick={}
+                        label={tagItem.tag}
                         className="tag-name"
                       />
                     )
-                  })}</div>
+                  })}
+                  </div>
               </div>
             </div>
           </div>
             </div>
             <div className="product-infor-right-column">
               <MediumText mbNumber={20} style={{ textAlign: 'left', fontSize: '30px' }} className="product-name">
-                San phamSan phamSan phamSan pham
+               {toy.toyName}
               </MediumText>
               <Link to='/'>
                 <Paper variant="outlined" className="user-account">
@@ -174,23 +243,30 @@ export function ProductDetailPage() {
                     </StyledBadge>
                   </div>
                   <div className="infor">
-                    Tên tài khoản: <span>Trung</span><br></br>
+                    Người bán: <span>Trung</span><br></br>
                    Đánh giá: <Rating name="read-only" value={3.5} readOnly precision={0.5} /><br></br>
                   </div>
                 </Paper>
               </Link>
               <div className="product-price">
                 <LocalAtmTwoToneIcon className="icon-coin" />
-                <div>10</div>
+                <div>{toy.ecoin}</div>
               </div>
               <div className="btn-contact">
-                <Button className="btn-done" variant="contained" startIcon={<FavoriteTwoToneIcon  />}>
-                  Yêu cầu trao đổi
-                 </Button>
-                 <Button className="btn-sold" disabled variant="contained" startIcon={<SentimentVeryDissatisfiedIcon  />}>
-                  Đã bán
-                 </Button>
-
+                {
+                  toy.status ==="READY" ? (
+                    <Button className="btn-done" variant="contained" startIcon={<FavoriteTwoToneIcon  />}>
+                    Yêu cầu trao đổi
+                   </Button>
+                  ) : (
+                    <Button className="btn-sold" disabled variant="contained" startIcon={<SentimentVeryDissatisfiedIcon  />}>
+                    Đã bán
+                   </Button>
+  
+                  )
+                }
+               
+               
               </div>
 
             </div>
@@ -209,9 +285,9 @@ export function ProductDetailPage() {
             hideArrow
             slidesToShow={4}
             slidesToScroll={1}
-            items={images.map((item, index) => {
-              return (<ProductItem item={item} />);
-            })}
+            // items={images.map((item, index) => {
+            //   return (<ProductItem item={item} />);
+            // })}
           />
         </div>
       </AppWrapper>
@@ -220,7 +296,6 @@ export function ProductDetailPage() {
 }
 
 ProductDetailPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -229,7 +304,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getDetailToy : async (data) => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getDetailToy({ resolve, reject, data }));
+      });
+  }
   };
 }
 

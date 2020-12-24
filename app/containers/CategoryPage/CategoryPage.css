@@ -10,6 +10,12 @@
 .category-page-wrapper .left-column .left-column-item{
     margin-bottom: 30px;
 }
+.category-page-wrapper .left-column .left-column-item .btn{
+    background-color: #00B7EB ;
+    color: honeydew;
+
+}
+
 .category-page-wrapper .left-column .title {
     font-size: 15px;
     font-weight: bolder;

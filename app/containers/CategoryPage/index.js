@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -19,6 +19,8 @@ import makeSelectCategoryPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { useSnackbar } from 'notistack';
+
 import './CategoryPage.css';
 import AppWrapper from '../../components/AppWrapper/index';
 import Slider from '@material-ui/core/Slider';
@@ -28,7 +30,15 @@ import SortIcon from '@material-ui/icons/Sort';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ProductItem from '../../components/ProductItem/index';
+import Button from '@material-ui/core/Button';
+import * as PageActions from './actions';
 
+import {
+  Link,
+  useHistory,
+  useLocation
+} from "react-router-dom";
+import queryString from 'query-string';
 
 const GreenCheckbox = withStyles({
   root: {
@@ -39,39 +49,65 @@ const GreenCheckbox = withStyles({
   },
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
-const images = [
-  {
-    original: 'https://picsum.photos/id/1018/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1018/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1015/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1015/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  },
-  {
-    original: 'https://p0ct8ommu0.vcdn.com.vn/media/wysiwyg/homepage/0-12TH.jpg',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  }
-];
 
 
-export function CategoryPage() {
+
+export function CategoryPage(props) {
   useInjectReducer({ key: 'categoryPage', reducer });
   useInjectSaga({ key: 'categoryPage', saga });
-  const [value, setImageNew] = useState([100, 300]);
+
+   let history = useHistory();
+   let location = useLocation();
+   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+   const [errorFilter, setErrorFilter] = useState(false);
+
+  const [ecoinDefault, setEcoinDefault] = useState([0, 500]);
+  const [ecoin, setEcoin] = useState([]);
   const [checked, setChecked] = React.useState(true);
+  const [toyList, setToyList] = React.useState([]);
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-    
+  
+  const onFilter = () =>{
+    history.push('category?city=HN');
+  }
+
+  const sortAscending = () =>{
+    const myData = [].concat(toyList)
+    .sort((a, b) => a.ecoin >= b.ecoin ? 1 : -1);
+    setToyList(myData);
+  }
+  const sortDecreasing = () =>{
+    const myData = [].concat(toyList)
+    .sort((a, b) => a.ecoin <= b.ecoin ? 1 : -1);
+    setToyList(myData);
+  }
+
+  useEffect(() => {
+    (async() => {
+      const dataQuery = queryString.parse(location.search);   
+      await props.filterToy(dataQuery)
+      .then((rs) => {
+        
+        if(rs.data.data.data.length > 0){
+          setErrorFilter(false)
+          setToyList(rs.data.data.data);
+
+        }else{
+          setToyList(rs.data.data.data);
+          setErrorFilter(true);
+
+        }
+    })
+    .catch((err) => {
+     
+    });
+     })();
+
+  }, [location]);
   return (
     <div className="category-page-wrapper">
       <AppWrapper >
@@ -82,12 +118,16 @@ export function CategoryPage() {
                 ECOIN
               </div>
               <Slider
-                defaultValue={value}
+                defaultValue={ecoinDefault}
                 getAriaValueText={value => value}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="on"
-                min={10}
+                min={0}
                 max={500}
+                onChange={(e, data)=>{
+                  setEcoin(data);
+                  console.log('slideeeeeeee',data)
+                }}
               />
             </div>
             <div className="left-column-item">
@@ -99,12 +139,12 @@ export function CategoryPage() {
                   control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>Đã sử dụng</span>}
                   className="checkbox-item"
-                  value="used"
+                  value="S"
                 />
                 <FormControlLabel
                   control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>Còn mới</span>}
-                  value="new"
+                  value="M"
                   className="checkbox-item"
                 />
 
@@ -171,27 +211,39 @@ export function CategoryPage() {
 
               </div>
             </div>
+            <div className="left-column-item">
+            <Button
+                variant="contained"
+                className="btn filter"
+               onClick={onFilter}
+              > Tìm kiếm
+              </Button>
+            </div>
 
           </div>
 
           <div className="right-column">
             <div  className="sort-list">
-              <span className="title">Sắp xếp theo</span>
-              <div className="sort-item">
+              <span className="title">Ecoin: </span>
+              <div className="sort-item" onClick={sortDecreasing}>
                 <ArrowDownwardIcon />
                 <SortIcon />
-                <span>Giá cao</span>
+                <span>Giảm dần </span>
               </div>
-              <div className="sort-item">
+              <div className="sort-item" onClick={sortAscending}>
                 <ArrowUpwardIcon />
                 <SortIcon />
-                <span>Giá thấp</span>
+                <span>Tăng dần</span>
               </div>
             </div>
             <div className="product-list">
-            {images.map((item, index) => {
+            {toyList.map((item, index) => {
               return (<ProductItem className="home" item={item}  marginLR={10} marginTB={10} />);
             })}
+            {
+              errorFilter && <div style={{margin: 'auto', fontSize: '20px'}}>Không tìm thấy đồ chơi</div> 
+            }
+              
             </div>
           </div>
         </div>
@@ -210,7 +262,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    filterToy : async (data) => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.filterToy({ resolve, reject, data }));
+      });
+  }
   };
 }
 

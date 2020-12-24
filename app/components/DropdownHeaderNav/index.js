@@ -17,7 +17,8 @@ function DropdownHeaderNav({ children, placement, menu, className, arrow, isClic
               {
                 searchText === "category" ?
                 (
-                  <Link rel="noopener noreferrer"  >
+                  <Link rel="noopener noreferrer" to={`${routesLinks.category}?${searchText}=${item.id}`} 
+                  >
                   {item.value}
                 </Link> 
                 )

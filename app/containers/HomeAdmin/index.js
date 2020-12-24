@@ -25,6 +25,9 @@ import TopBar from '../../components/TopBar/index'
 import AccountView from '../AccountView/Loadable';
 import DashboardView from '../DashboardView/Loadable';
 import UserView from '../UserView/Loadable';
+import CategoryView from '../CategoryView/Loadable';
+import TagView from '../TagView/Loadable';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +84,13 @@ export function HomeAdmin() {
             />
             <Route exact  path={`${routesLinks.homeAdmin}/users`} 
              component={UserView}
-            />
+            /> 
+            <Route exact  path={`${routesLinks.homeAdmin}/categories`} 
+            component={CategoryView}
+           />
+            <Route exact  path={`${routesLinks.homeAdmin}/tags`} 
+            component={TagView}
+           />
           </Switch>
           </div>
         </div>

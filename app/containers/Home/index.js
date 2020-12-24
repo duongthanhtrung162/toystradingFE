@@ -29,9 +29,12 @@ import ProductItem from '../../components/ProductItem/index';
 import CategoryItem from '../../components/CategoryItem/index';
 import AgeItem from '../../components/AgeItem/index';
 
-export function Home() {
+import * as PageActions from './actions';
+
+export function Home(props) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
+  const listToyNew = props.home.newestListToy;
 
   const images = [
     {
@@ -56,10 +59,13 @@ export function Home() {
     }
   ];
 
-  // useEffect(() => {
+  useEffect(() => {
     
-  // }, []);
-
+    (async() => {
+     await props.getNewestToy();
+     //setCategoryList(result.data.data.data); 
+    })();
+  }, []);
 
   return (
     <div className="home-main">
@@ -78,7 +84,7 @@ export function Home() {
             hideArrow
             slidesToShow={4}
             slidesToScroll={1}
-            items={images.map((item, index) => {
+            items={listToyNew.map((item, index) => {
               return (<ProductItem item={item} />);
             })}
           />
@@ -121,7 +127,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getNewestToy : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getNewestToy({ resolve, reject }));
+      });
+  }
   };
 }
 

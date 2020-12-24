@@ -34,8 +34,8 @@ function SelectFieldUi(props) {
       )}
     >   <Autocomplete
         id="form-select"
-        //style={{ width: 300 }}
-        getOptionLabel={(option) => option.label}
+      value = {props.value}
+        getOptionLabel={(option) => option.value}
         options={props.options}
         classes={{
           option: classes.option,
@@ -50,13 +50,13 @@ function SelectFieldUi(props) {
         // }}
         renderOption={(option) => (
           <React.Fragment>
-            
-            {option.label} 
+            {option.value} 
           </React.Fragment>
         )}
         renderInput={(params) => (
           <TextField
             {...params}
+            error={props.error}
             label={props.label}
             variant="outlined"
             inputProps={{
@@ -68,7 +68,7 @@ function SelectFieldUi(props) {
       />
 
       {props.actionText && <div className="form-field-action" onClick={props.action}>{props.actionText}</div>}
-      {props.touched && props.error && <div className="form-field-error">{props.error}</div>}
+      {props.touched && props.errors && <div className="form-field-error">{props.errors}</div>}
       {props.validMessage && <div className="form-field-error">{props.validMessage}</div>}
     </div>
   );

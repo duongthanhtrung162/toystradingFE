@@ -1,13 +1,20 @@
 /*
  *
- * ForgotPassword actions
+ * RegisterPage actions
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as constant from './constants'
 
 export function defaultAction() {
   return {
-    type: DEFAULT_ACTION,
+    type: constant.DEFAULT_ACTION,
+  };
+}
+export function restartPassword(data) {
+  
+  return {
+    type: constant.RESTART_PASSWORD,
+    payload: data
   };
 }

@@ -15,7 +15,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectUserView from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 
 import {
   Box,

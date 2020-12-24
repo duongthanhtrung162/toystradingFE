@@ -1,6 +1,4 @@
-.gallery-wrapper {
-	cursor: pointer;
-}
+
 .slider-wrapper .image-gallery .image-gallery-slide-wrapper {
 	position: relative;
 }
@@ -106,6 +104,17 @@
 	background-color: #2a2c30;
 }
 .gallery-wrapper {
+	cursor: pointer;
+}
+.gallery-wrapper .image-gallery-slide img {
+    width: 100%;
+    height: 400px;
+    /* //max-height: 80vh; */
+    object-fit: contain;
+    overflow: hidden;
+    object-position: center center;
+}
+.gallery-wrapper .image-gallery{
 	/* width: 540px; */
 }
 .gallery-wrapper .image-gallery .image-gallery-slide-wrapper {

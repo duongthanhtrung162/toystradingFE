@@ -3,8 +3,14 @@
     "host": "https://toystrading.herokuapp.com/v1/",
     "api": {
       "login": "login",
+      "restartPassword": "forgetPw",
       "user": "users",
-      "category": "category"
+      "category": "category",
+      "categoryAuth": "auth/category",
+      "tag": "tag",
+      "tagAuth" : "auth/tag",
+      "toy": "toy",
+      "addToy": "auth/toy"
     }
   }
 }
