@@ -89,7 +89,7 @@ const Results = ({ className, handleDelete,handleEdit,tagList, ...rest }) => {
               <TableRow>
                 
                 <TableCell>
-                  Id
+                  Mã tag
                 </TableCell>
                 <TableCell>
                   Tag
@@ -154,7 +154,7 @@ const Results = ({ className, handleDelete,handleEdit,tagList, ...rest }) => {
                             className={classes.Button}
                             startIcon={<EditIcon></EditIcon>}
                             onClick ={ () =>{
-                              handleEdit(item.id);
+                              handleEdit(item.id, item.value);
                             }}
                         >
                             Sửa

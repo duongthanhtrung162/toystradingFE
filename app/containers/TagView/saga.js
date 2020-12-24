@@ -20,6 +20,36 @@ export function* getTagList(action) {
     reject(err);
   }
 }
+export function* createTag(action) {
+  const { reject, resolve, data } = action.payload;
+  
+  try {
+    const apiUrl = yield apiRequests.tagAuth;
+    const result = yield apiRequests.postRequest(apiUrl, data);
+    
+    if (result) {
+      resolve(result)
+     
+    }
+  } catch (err) {
+    reject(err);
+  }
+}
+export function* updateTag(action) {
+  const { reject, resolve, id ,value } = action.payload;
+  
+  try {
+    const apiUrl = yield apiRequests.tagAuth;
+    const result = yield apiRequests.putRequest(`${apiUrl}/${id}`, value);
+    
+    if (result) {
+      resolve(result)
+     
+    }
+  } catch (err) {
+    reject(err);
+  }
+}
 export function* deleteTag(action) {
   const { reject, resolve, data } = action.payload;
   
@@ -39,5 +69,6 @@ export function* deleteTag(action) {
 export default function* tagViewSaga() {
   yield takeLatest(constant.ACTION_GET_TAG, getTagList);
   yield takeLatest(constant.ACTION_DELETE_TAG, deleteTag);
-
+  yield takeLatest(constant.ACTION_CREATE_TAG, createTag);
+  yield takeLatest(constant.ACTION_UPDATE_TAG, updateTag);
 }

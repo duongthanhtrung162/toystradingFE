@@ -30,3 +30,19 @@ export function deleteTag(data) {
 
   };
 }
+export function createTag(data) {
+  
+  return {
+    type: constant.ACTION_CREATE_TAG,
+    payload: data
+
+  };
+}
+export function updateTag(data) {
+  debugger
+  return {
+    type: constant.ACTION_UPDATE_TAG,
+    payload: data
+
+  };
+}

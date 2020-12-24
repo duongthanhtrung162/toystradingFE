@@ -44,7 +44,7 @@ export function createCategory(data) {
   };
 }
 export function updateCategory(data) {
-  debugger
+  
   return {
     type: constant.ACTION_UPDATE_CATEGORY,
     payload: data

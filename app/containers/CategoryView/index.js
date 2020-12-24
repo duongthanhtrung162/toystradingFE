@@ -47,12 +47,12 @@ export function CategoryView(props) {
   useInjectReducer({ key: 'categoryView', reducer });
   useInjectSaga({ key: 'categoryView', saga });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+  const classes = useStyles();
   let categoryList = props.categoryView.categoryList;
+
   const [categoryItem, setCategoryItem] = useState({id: 0, value : ''})
   const [editting, setEditting] = useState(false)
   const [creatting, setCreatting] = useState(false)
-  const classes = useStyles();
   const validationSchema = yup.object().shape({
     value: yup.string()
       .required('Nhập danh mục!'),
@@ -146,7 +146,6 @@ export function CategoryView(props) {
           editting ? <div className="categoryView-title">Danh mục</div>
           :
           <Toolbar createCategory={create} />
-
 
         }
         <Box mt={3}>

@@ -40,12 +40,12 @@ const items = [
   {
     href: `${routesLinks.homeAdmin}/dashboard`,
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: 'Thống kê'
   },
   {
     href: `${routesLinks.homeAdmin}/users`,
     icon: UsersIcon,
-    title: 'Users'
+    title: 'Tài khoản'
   },
   {
     href: `${routesLinks.homeAdmin}/categories`,

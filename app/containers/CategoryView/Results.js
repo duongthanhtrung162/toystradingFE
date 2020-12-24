@@ -88,7 +88,7 @@ const Results = ({ className, categoryList, handleEdit, handleDelete, ...rest })
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Id
+                  Mã danh mục
                 </TableCell>
                 <TableCell>
                   Danh mục

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className,createTag, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -45,7 +45,7 @@ const Toolbar = ({ className, ...rest }) => {
           color="primary"
           variant="contained"
           startIcon={<AddIcon />}
-
+          onClick = { () => createTag()}
         >
           Thêm tag
         </Button>
