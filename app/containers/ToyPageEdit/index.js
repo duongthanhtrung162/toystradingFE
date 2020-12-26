@@ -75,7 +75,7 @@ export function ToyPageEdit(props) {
     })
   }
   const removeImagePreview = (photo) => {
-    debugger
+    
     let newArr = [...imagePreview]
     lodash.remove(newArr, function(e) {
       return e === photo;

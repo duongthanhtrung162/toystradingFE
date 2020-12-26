@@ -18,6 +18,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import {
+  List as ListIcon,
+  Menu as MenuIcon,
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
   Lock as LockIcon,
@@ -58,19 +60,14 @@ const items = [
     title: 'Tags'
   },
   {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
+    href: `${routesLinks.homeAdmin}/toys`,
+    icon: ListIcon,
+    title: 'Đồ chơi'
   },
   {
     href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
+    icon: MenuIcon,
+    title: 'Giao dịch'
   }
 ];
 const useStyles = makeStyles(() => ({

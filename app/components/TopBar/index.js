@@ -31,6 +31,7 @@ const useStyles = makeStyles(() => ({
 
 function TopBar({
   className,
+  onLogout,
   onMobileNavOpen,
   ...rest
 }) {
@@ -57,7 +58,7 @@ function TopBar({
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={onLogout}>
           <InputIcon />
         </IconButton>
       </Hidden>

@@ -37,7 +37,6 @@ export function* createTag(action) {
 }
 export function* updateTag(action) {
   const { reject, resolve, id ,value } = action.payload;
-  
   try {
     const apiUrl = yield apiRequests.tagAuth;
     const result = yield apiRequests.putRequest(`${apiUrl}/${id}`, value);

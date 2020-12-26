@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import routesLinks from '../App/routesLinks';
 import { Switch, Route,useLocation  } from 'react-router-dom';
+import { clearAllLocalStorage } from '../../utils/helper';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -27,6 +28,9 @@ import DashboardView from '../DashboardView/Loadable';
 import UserView from '../UserView/Loadable';
 import CategoryView from '../CategoryView/Loadable';
 import TagView from '../TagView/Loadable';
+import ToyView from '../ToyView/Loadable';
+
+import history from 'utils/history';
 
 
 
@@ -62,12 +66,16 @@ const useStyles = makeStyles((theme) => ({
 export function HomeAdmin() {
   useInjectReducer({ key: 'homeAdmin', reducer });
   useInjectSaga({ key: 'homeAdmin', saga });
-
+  const onLogout = async () =>
+  {
+    await clearAllLocalStorage();
+    history.push('/');
+  }
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   return (
     <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} onLogout={onLogout} />
       <NavBar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
@@ -90,6 +98,9 @@ export function HomeAdmin() {
            />
             <Route exact  path={`${routesLinks.homeAdmin}/tags`} 
             component={TagView}
+           />
+           <Route exact  path={`${routesLinks.homeAdmin}/toys`} 
+            component={ToyView}
            />
           </Switch>
           </div>

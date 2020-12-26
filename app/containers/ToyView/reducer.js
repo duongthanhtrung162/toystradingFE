@@ -1,25 +1,20 @@
 /*
  *
- * UserView reducer
+ * ToyView reducer
  *
  */
 import produce from 'immer';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = {
-  userList : []
-};
+export const initialState = {};
 
 /* eslint-disable default-case, no-param-reassign */
-const userViewReducer = (state = initialState, action) =>
+const toyViewReducer = (state = initialState, action) =>
   produce(state, (/* draft */) => {
     switch (action.type) {
       case DEFAULT_ACTION:
-        
-        state.userList = action.value;
-        
-        return {...state};
+        break;
     }
   });
 
-export default userViewReducer;
+export default toyViewReducer;

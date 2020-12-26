@@ -34,7 +34,7 @@ axios.interceptors.response.use(function(response) {
   
   if (error.response.data.code === 70 || error.response.data.code === 4178) {
     await clearAllLocalStorage();
-    debugger
+    
     history.push('/login'); //relative tgetProductListo domain
   }
   return Promise.reject(error);
@@ -47,6 +47,7 @@ const apiRequests = {
   user: `${config.toystrading.host}${config.toystrading.api.user}`,
   categoryAuth: `${config.toystrading.host}${config.toystrading.api.categoryAuth}`,
   tagAuth: `${config.toystrading.host}${config.toystrading.api.tagAuth}`,
+  userAuth: `${config.toystrading.host}${config.toystrading.api.userAuth}`,
 
   category: `${config.toystrading.host}${config.toystrading.api.category}`,
   tag: `${config.toystrading.host}${config.toystrading.api.tag}`,

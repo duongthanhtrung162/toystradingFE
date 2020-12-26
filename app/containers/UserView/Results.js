@@ -5,6 +5,8 @@ import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import LocalAtmTwoToneIcon from '@material-ui/icons/LocalAtmTwoTone';
+
 import {
   Avatar,
   Box,
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Results = ({ className, customers, ...rest }) => {
+const Results = ({ className, customers,userList,handleDelete, ...rest }) => {
   const classes = useStyles();
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -89,13 +91,22 @@ const Results = ({ className, customers, ...rest }) => {
               <TableRow>
                 
                 <TableCell>
-                  Id
+                  Tên
                 </TableCell>
                 <TableCell>
-                  Danh mục
+                  Email
                 </TableCell>
                 <TableCell>
-                    Cập nhật
+                  Phone
+                </TableCell>
+                <TableCell>
+                  Ecoin
+                </TableCell>
+                <TableCell>
+                  Điểm đánh giá
+                </TableCell>
+                <TableCell>
+                    Ngày tạo
                 </TableCell>
                 <TableCell>
                   
@@ -104,11 +115,11 @@ const Results = ({ className, customers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {userList.slice(0, limit).map((item) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={item.id}
+                  selected={selectedCustomerIds.indexOf(item.id) !== -1}
                 >
                   {/* <TableCell padding="checkbox">
                     <Checkbox
@@ -132,28 +143,40 @@ const Results = ({ className, customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {item.userName}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {item.email}
+                  </TableCell>
+                  <TableCell>
+                    {item.phone}
+                  </TableCell>
+                  <TableCell>
+                  <LocalAtmTwoToneIcon className="icon-coin" />
+
+                    {item.ecoin}
+                  </TableCell>
+                  <TableCell>
+                    {item.rate ? item.rate : ''}
                   </TableCell>
                   {/* <TableCell>
                     {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
                   </TableCell> */}
                  
                   <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
+                    {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    
-           
                         <Button
                         variant="contained"
                         color="secondary"
                         className={classes.Button}
                         startIcon={<DeleteIcon />}
+                        onClick ={ () =>{
+                          handleDelete(item.id);
+                        }}
                         >
                         Xóa
                     </Button>
@@ -166,7 +189,7 @@ const Results = ({ className, customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={userList.length}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}

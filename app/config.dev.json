@@ -5,6 +5,7 @@
       "login": "login",
       "restartPassword": "forgetPw",
       "user": "users",
+      "userAuth" : "auth/users",
       "category": "category",
       "categoryAuth": "auth/category",
       "tag": "tag",

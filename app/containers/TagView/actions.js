@@ -39,7 +39,7 @@ export function createTag(data) {
   };
 }
 export function updateTag(data) {
-  debugger
+  
   return {
     type: constant.ACTION_UPDATE_TAG,
     payload: data

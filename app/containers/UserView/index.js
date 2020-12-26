@@ -4,17 +4,19 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { useSnackbar } from 'notistack';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectUserView from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import * as PageActions from './actions';
 
 import {
   Box,
@@ -24,7 +26,7 @@ import {
 import Page from '../AccountView/Page';
 import Results from './Results';
 import Toolbar from './Toolbar';
-import data from './data';
+import './UserView.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,13 +36,33 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   }
 }));
-export function UserView() {
+export function UserView(props) {
   useInjectReducer({ key: 'userView', reducer });
   useInjectSaga({ key: 'userView', saga });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const classes = useStyles();
-  const [customers] = useState(data);
+  const userList = props.userView.userList;
 
+  const deleteItem = (id) => {
+    props.deleteUser(id)
+    .then((rs) => {
+      props.getUserList();
+      enqueueSnackbar('Xóa thành công', {
+        variant: 'success',
+      });
+    }
+    )
+    .catch((err)=> {
+    }
+    )
+  }
+  useEffect(() => {
+    (async() => {
+     await   props.getUserList();
+     //setCategoryList(result.data.data.data); 
+    })();
+  }, []);
   return (
     <Page
       className={classes.root}
@@ -49,7 +71,7 @@ export function UserView() {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results userList={userList} handleDelete={deleteItem}/>
         </Box>
       </Container>
     </Page>
@@ -57,7 +79,6 @@ export function UserView() {
 }
 
 UserView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -66,7 +87,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getUserList : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getUserList({ resolve, reject }));
+      });
+  },
+  deleteUser : async (data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.deleteTag({ resolve, reject,data }));
+    });
+},
   };
 }
 
