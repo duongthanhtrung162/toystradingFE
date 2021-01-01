@@ -65,7 +65,7 @@ const items = [
     title: 'Đồ chơi'
   },
   {
-    href: '/register',
+    href: `${routesLinks.homeAdmin}/transactions`,
     icon: MenuIcon,
     title: 'Giao dịch'
   }
@@ -118,7 +118,7 @@ function NavBar({ onMobileClose, openMobile }) {
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          Admin
         </Typography>
       </Box>
       <Divider />

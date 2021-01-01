@@ -3,7 +3,7 @@
  * HomeAdmin
  *
  */
-import React, { memo, useState } from 'react';
+import React, { memo, useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -29,6 +29,8 @@ import UserView from '../UserView/Loadable';
 import CategoryView from '../CategoryView/Loadable';
 import TagView from '../TagView/Loadable';
 import ToyView from '../ToyView/Loadable';
+import TransactionView from '../TransactionView/Loadable';
+
 
 import history from 'utils/history';
 
@@ -71,6 +73,7 @@ export function HomeAdmin() {
     await clearAllLocalStorage();
     history.push('/');
   }
+
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   return (
@@ -101,6 +104,9 @@ export function HomeAdmin() {
            />
            <Route exact  path={`${routesLinks.homeAdmin}/toys`} 
             component={ToyView}
+           />
+           <Route exact  path={`${routesLinks.homeAdmin}/transactions`} 
+            component={TransactionView}
            />
           </Switch>
           </div>

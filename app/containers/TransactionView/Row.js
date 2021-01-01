@@ -75,21 +75,21 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.toyName}
+                    {row.id}
                 </TableCell>
                 <TableCell >
                     {moment(row.createdAt).format('DD/MM/YYYY')}
 
                 </TableCell >
                 <TableCell   >
-                    <div className={`status ${row.status === "READY" ? 'request' : (row.status === "SOLD" ? 'cancel' : 'accepted')}`}>
+                    <div className={`status ${row.status === "REQUEST" ? 'request' : (row.status === "ACCEPT" ? 'accepted' : 'cancel')}`}>
                         <span className="icon-status"></span>
-                        {row.status === "READY" ? 'sẵn sàng' : (row.status === "SOLD" ? 'đã bán' : 'đang giao dịch')}
+                        {row.status === "REQUEST" ? 'đang yêu cầu' : (row.status === "ACCEPT" ? 'đồng ý giao dịch' : (row.status === "SOLD" ? 'đã bán' : 'hủy bỏ') )}
                     </div>
 
                 </TableCell>
 
-                <TableCell >
+                {/* <TableCell >
                     <Button
                         variant="contained"
                         color="secondary"
@@ -101,77 +101,44 @@ function Row(props) {
                     >
                         Xóa
                     </Button>
-                </TableCell>
+                </TableCell> */}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box margin={1}>
+                    <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
-                                Thông tin
+                                Đồ chơi
                           </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableRow>
-                                    <TableCell variant="head" className="header-title">Ecoin</TableCell>
-                                    <TableCell>
-                                        <LocalAtmTwoToneIcon className="icon-coin" style={{ color: 'yellow' }} />
-                                        {row.ecoin}
-                                    </TableCell>
+                                   {row.toyid}
+                                
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Giới tính</TableCell>
-                                    <TableCell>{
-                                        row.sex === "trai" ? "Bé trai" : "Bé gái"
-                                    }</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Độ tuổi</TableCell>
-                                    <TableCell>{
-                                        renderAge(row.age)
-                                    }</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Khu vực</TableCell>
-                                    <TableCell>{
-                                        renderCity(row.city)
-                                    }</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Tình trạng</TableCell>
-                                    <TableCell>{
-                                        row.condition === "M" ? "Còn mới" : "Đã sử dụng"
-                                    }</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Mô tả</TableCell>
-                                    <TableCell>{
-                                        row.description
-                                    }</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell variant="head" className="header-title">Từ khóa</TableCell>
-                                    <TableCell>{row.tag_toys.length > 0 && row.tag_toys.map((tagItem, index) => {
-                                        return (
-                                            <Chip
-                                                label={tagItem.tag}
-                                                className="tag-name"
-                                            />
-                                        )
-                                    })}</TableCell>
-                                </TableRow>
+                               
                             </Table>
                         </Box>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
-                                Hình ảnh
+                                Người mua
                           </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableRow>
-                                    {row.assets.length > 0 ? row.assets.map((item, index) =>{
-                                        return <img style={{margin: '5px'}} src={item.url} />
-                                    }) : <div></div>
-                                }
-                                  
+                                   {row.buyer}
+
+                                
+                                </TableRow>
+                               
+                            </Table>
+                        </Box>
+                        <Box margin={1}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Người bán
+                          </Typography>
+                            <Table size="small" aria-label="purchases">
+                                <TableRow>
+                                   {row.seller}
+
                                 
                                 </TableRow>
                                

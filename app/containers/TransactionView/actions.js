@@ -1,6 +1,6 @@
 /*
  *
- * AccountView actions
+ * TransactionView actions
  *
  */
 
@@ -13,18 +13,9 @@ export function defaultAction(name, value) {
     value
   };
 }
-export function getUser(data) {
- 
+export function getNewestTransaction(data) {
   return {
-    type: constant.ACTION_GET_USER,
-    payload: data
-
-  };
-}
-export function updateUser(data) {
- 
-  return {
-    type: constant.ACTION_UPDATE_USER,
+    type: constant.ACTION_GET_NEWEST_TRANSACTION,
     payload: data
 
   };

@@ -1,10 +1,10 @@
 /**
  *
- * ToyView
+ * TransactionView
  *
  */
 
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -14,12 +14,11 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectToyView from './selectors';
+import makeSelectTransactionView from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import Page from '../AccountView/Page';
-import moment from 'moment';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -36,10 +35,9 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Row from './Row';
-import './ToyView.css';
+import './TransactionView.css';
 import { useSnackbar } from 'notistack';
 import * as PageActions from './actions';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,84 +47,59 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   }
 }));
-
-
-export function ToyView(props) {
-  useInjectReducer({ key: 'toyView', reducer });
-  useInjectSaga({ key: 'toyView', saga });
+export function TransactionView(props) {
+  useInjectReducer({ key: 'transactionView', reducer });
+  useInjectSaga({ key: 'transactionView', saga });
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const listToyNew = props.toyView.newestListToy;
-
-
-  const deleteItem = (id) => {
-    debugger  
-    props.deleteToy(id)
-    .then((rs) => {
-      props.getNewestToy();
-      enqueueSnackbar('Xóa thành công', {
-        variant: 'success',
-      });
-    }
-    )
-    .catch((err)=> {
-    }
-    )
-  }
+  const listTransactionNew = props.transactionView.newestListTransaction;
   useEffect(() => {
     
     (async() => {
-     await props.getNewestToy();
+     await props.getNewestTransaction();
      //setCategoryList(result.data.data.data); 
     })();
   }, []);
   return (
     <Page
-      className={classes.root}
-      title="Customers"
-    >
+    className={classes.root}
+    title="Customers"
+  >
 <TableContainer component={Paper}>
-      <Table aria-label="collapsible table" className="table-data">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell className="header">Sản phẩm</TableCell>
-            <TableCell  className="header">Ngày tạo</TableCell>
-            <TableCell  className="header">Trạng thái</TableCell>
-            <TableCell align="right" className="header"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {listToyNew.map((row) => (
-            <Row key={row.toyName} row={row} handleDelete={deleteItem}/>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </Page>
+    <Table aria-label="collapsible table" className="table-data">
+      <TableHead>
+        <TableRow>
+          <TableCell />
+          <TableCell className="header">Giao dịch</TableCell>
+          <TableCell  className="header">Ngày tạo</TableCell>
+          <TableCell  className="header">Trạng thái</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {listTransactionNew.map((row) => (
+          <Row key={row.id} row={row} />
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+  </Page>
   );
 }
 
-ToyView.propTypes = {
+TransactionView.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  toyView: makeSelectToyView(),
+  transactionView: makeSelectTransactionView(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNewestToy : async () => {
+    getNewestTransaction : async () => {
       return new Promise((resolve, reject) => {
-        return dispatch(PageActions.getNewestToy({ resolve, reject }));
+        return dispatch(PageActions.getNewestTransaction({ resolve, reject }));
       });
-  },
-  deleteToy : async (data) => {
-    return new Promise((resolve, reject) => {
-      return dispatch(PageActions.deleteToy({ resolve, reject,data }));
-    });
-},
-  };
+  },  };
 }
 
 const withConnect = connect(
@@ -137,4 +110,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(ToyView);
+)(TransactionView);

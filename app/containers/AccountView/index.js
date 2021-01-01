@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -26,7 +26,8 @@ import {
 import Page from './Page';
 import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
-
+import { useSnackbar } from 'notistack';
+import * as PageActions from './actions'
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -36,11 +37,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function AccountView() {
+export function AccountView(props) {
   useInjectReducer({ key: 'accountView', reducer });
   useInjectSaga({ key: 'accountView', saga });
   const classes = useStyles();
-
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const user = props.accountView.user;
+  const [updateInfor, setupdateInfor] = useState(false)
+  const changeUpdate = () =>{
+    
+    setupdateInfor(true);
+  }
+  useEffect(() => {
+    
+    (async() => {
+     await props.getUser();
+     //setCategoryList(result.data.data.data); 
+    })();
+  }, [updateInfor]);
   return (
       <Page
         className={classes.root}
@@ -57,7 +71,7 @@ export function AccountView() {
               md={6}
               xs={12}
             >
-              <Profile />
+              <Profile user={user} />
             </Grid>
             <Grid
               item
@@ -65,7 +79,7 @@ export function AccountView() {
               md={6}
               xs={12}
             >
-              <ProfileDetails />
+              <ProfileDetails user={user} updateUser={props.updateUser} updateInforUser={changeUpdate}/>
             </Grid>
           </Grid>
         </Container>
@@ -75,7 +89,6 @@ export function AccountView() {
 }
 
 AccountView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -84,7 +97,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getUser : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getUser({ resolve, reject }));
+      });
+  },
+  updateUser : async (data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.updateUser({ resolve, reject,data }));
+    });
+},
   };
 }
 

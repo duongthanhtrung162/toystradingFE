@@ -24,7 +24,7 @@ export function getUserList(data) {
   };
 }
 
-export function deleteTag(data) {
+export function deleteUser(data) {
   
   return {
     type: constant.ACTION_DELETE_USER,

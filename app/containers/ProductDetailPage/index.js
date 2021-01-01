@@ -204,10 +204,10 @@ export function ProductDetailPage(props) {
                     toy.description
                 }</div>
               </div>
-              <div className="table-row">
+              {/* <div className="table-row">
                 <div className="sub-title">Link tham khảo</div>
                 <div className="content"><a>dsdsdsds</a></div>
-              </div>
+              </div> */}
               <div className="table-row">
                 <div className="sub-title">Từ khóa</div>
                 <div className="content tag-list">

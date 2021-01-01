@@ -94,7 +94,7 @@ function mapDispatchToProps(dispatch) {
   },
   deleteUser : async (data) => {
     return new Promise((resolve, reject) => {
-      return dispatch(PageActions.deleteTag({ resolve, reject,data }));
+      return dispatch(PageActions.deleteUser({ resolve, reject,data }));
     });
 },
   };

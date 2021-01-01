@@ -6,14 +6,17 @@
 import produce from 'immer';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = {};
+export const initialState = {
+  user : {}
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const accountViewReducer = (state = initialState, action) =>
   produce(state, (/* draft */) => {
     switch (action.type) {
       case DEFAULT_ACTION:
-        break;
+        state.user = action.value;
+        return {...state}
     }
   });
 
