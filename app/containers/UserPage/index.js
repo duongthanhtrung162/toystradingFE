@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,6 +16,7 @@ import makeSelectUserPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { Link, useHistory,useLocation, useParams } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Badge from '@material-ui/core/Badge';
@@ -27,6 +28,8 @@ import Rating from '@material-ui/lab/Rating';
 import ProductItem from '../../components/ProductItem/index';
 import MediumText from '../../components/MediumText/index';
 import AppWrapper from '../../components/AppWrapper/index';
+import * as PageActions from './actions';
+import moment from 'moment';
 
 import './UserPage.css';
 
@@ -60,33 +63,23 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 
-export function UserPage() {
+export function UserPage(props) {
   useInjectReducer({ key: 'userPage', reducer });
   useInjectSaga({ key: 'userPage', saga });
+  const {user, listToyUser } = props.userPage;
+  let history = useHistory();
+  let location = useLocation();
+  let { userId } = useParams();
 
-  const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-    {
-      original: 'https://p0ct8ommu0.vcdn.com.vn/media/wysiwyg/homepage/0-12TH.jpg',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    }
-  ];
+  useEffect(() => {
+    (async() => {
+      await props.getUser(userId);
+      await props.getListToy(userId);
 
+     })();
+
+  }, [location]);
+  
 
   return (
     <div className="user-page-wrapper">
@@ -110,13 +103,13 @@ export function UserPage() {
 
             <div className="infor">
               <div className="infor-left">
-                Tên tài khoản: <span>Trung</span><br></br>
-                Giới tính: <span>Nam</span><br></br>
-                  Ngày tham gia: <span>1/1/2000</span><br></br>
+                Tên tài khoản: <span>{user.userName}</span><br></br>
+                {/* Giới tính: <span>Nam</span><br></br> */}
+                  Ngày tham gia: <span>{moment(user.createdAt).format('DD/MM/YYYY')}</span><br></br>
               </div>
               <div className="infor-right">
-                Trạng thái: <span>đang online</span><br></br>
-              Đánh giá: <Rating name="read-only" value={3.5} readOnly precision={0.5} /><br></br>
+                Trạng thái: <span>{user.activated === 1 ? 'hoạt động' : 'đã khóa'}</span><br></br>
+              Đánh giá: <Rating name="read-only" value={user.rate} readOnly precision={0.5} /><br></br>
               </div>
             </div>
           </Paper>
@@ -126,7 +119,7 @@ export function UserPage() {
             Sản phẩm
             </MediumText>
           <div className="list">
-            {images.map((item, index) => {
+            {listToyUser.map((item, index) => {
               return (<ProductItem className="home" item={item}  marginLR={10} marginTB={10} />);
             })}
           </div>
@@ -139,7 +132,6 @@ export function UserPage() {
 }
 
 UserPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -148,7 +140,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getUser : async (data) => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getUser({ resolve, reject, data }));
+      });
+  },
+  getListToy : async (data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.getListToy({ resolve, reject, data }));
+    });
+},
   };
 }
 

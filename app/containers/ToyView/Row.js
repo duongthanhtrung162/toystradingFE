@@ -168,7 +168,7 @@ function Row(props) {
                             <Table size="small" aria-label="purchases">
                                 <TableRow>
                                     {row.assets.length > 0 ? row.assets.map((item, index) =>{
-                                        return <img style={{margin: '5px'}} src={item.url} />
+                                        return <img style={{margin: '5px', width: '250px', height: '250px'}} src={item.url} />
                                     }) : <div></div>
                                 }
                                   

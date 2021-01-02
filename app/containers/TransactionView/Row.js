@@ -111,8 +111,15 @@ function Row(props) {
                                 Đồ chơi
                           </Typography>
                             <Table size="small" aria-label="purchases">
-                                <TableRow>
-                                   {row.toyid}
+                                <TableRow style={{display: 'flex',alignItems:"center"}}>
+                                    <div style={{color: 'blue', marginRight:"50px"}}>
+                                    {row.toy.toyName}
+                                    </div>
+                                    <div style={{display: 'flex',alignItems:"center"}}>
+                                    <LocalAtmTwoToneIcon className="icon-coin" style={{ color: 'yellow' }} />
+                                        {row.toy.ecoin}
+                                    </div>
+                                 
                                 
                                 </TableRow>
                                
@@ -124,7 +131,7 @@ function Row(props) {
                           </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableRow>
-                                   {row.buyer}
+                                   {row.user.userName}
 
                                 
                                 </TableRow>
@@ -137,7 +144,7 @@ function Row(props) {
                           </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableRow>
-                                   {row.seller}
+                                   {row.toy.user.userName}
 
                                 
                                 </TableRow>

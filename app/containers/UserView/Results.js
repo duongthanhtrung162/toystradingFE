@@ -154,7 +154,7 @@ const Results = ({ className, customers,userList,handleDelete, ...rest }) => {
                     {item.phone}
                   </TableCell>
                   <TableCell>
-                  <LocalAtmTwoToneIcon className="icon-coin" />
+                  <LocalAtmTwoToneIcon className="icon-coin" style={{color:'yellow'}}/>
 
                     {item.ecoin}
                   </TableCell>

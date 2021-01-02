@@ -22,8 +22,28 @@ export function* getDetailToy(action) {
     reject(err);
   }
 }
+// Individual exports for testing
+export function* requestToy(action) {
+  const { reject, resolve, data} = action.payload;
+  data['toyId'] = parseInt(data['toyId']);
+  try {
+    const apiUrl = `https://toystrading.herokuapp.com/v1/auth/transaction`
+    const result = yield apiRequests.postRequest(apiUrl, data);
+    
+    if (result) {
+      
+      resolve(result)
+     
+    }
+  } catch (err) {
+    
+    reject(err);
+  }
+}
 export default function* productDetailPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(constant.GET_DETAIL_TOY, getDetailToy);
+  yield takeLatest(constant.REQUEST_TOY, requestToy);
+
 
 }

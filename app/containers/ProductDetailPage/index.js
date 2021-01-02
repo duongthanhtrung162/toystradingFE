@@ -27,6 +27,8 @@ import LocalAtmTwoToneIcon from '@material-ui/icons/LocalAtmTwoTone';
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 //component
+import { useSnackbar } from 'notistack';
+
 import './ProductDetailPage.css';
 import AppWrapper from '../../components/AppWrapper/index';
 import Slide from '../../components/Slider/index';
@@ -35,6 +37,7 @@ import ProductItem from '../../components/ProductItem/index';
 import Carousel from '../../components/Carousel/index';
 import { Link, useHistory,useLocation, useParams } from 'react-router-dom';
 import * as PageActions from './actions';
+import ModalUi from '../../components/ModalUi/index';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -70,8 +73,10 @@ const StyledBadge = withStyles((theme) => ({
 export function ProductDetailPage(props) {
   useInjectReducer({ key: 'productDetailPage', reducer });
   useInjectSaga({ key: 'productDetailPage', saga });
-  
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const [toy, setToy] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   let history = useHistory();
   let location = useLocation();
@@ -146,7 +151,26 @@ export function ProductDetailPage(props) {
       return "";
     }
    }
+   const handleOnUserClick = (userId) => {
+    history.push(`/user/${userId}`);
+  };
+  const requestTransaction = async () => {
+    let data = {toyId : productId}
+    await props.requestToy(data)
+    .then((rs) => {
+      enqueueSnackbar('Yêu cầu thành công', {
+        variant: 'success',
+      });
+    }
+    )
+    .catch((err)=> {
+      enqueueSnackbar(err.response.data.message, {
+        variant: 'error',
+      });
+    }
+    )
 
+  }
    useEffect(() => {
     (async() => {
       await props.getDetailToy(productId)
@@ -228,7 +252,7 @@ export function ProductDetailPage(props) {
               <MediumText mbNumber={20} style={{ textAlign: 'left', fontSize: '30px' }} className="product-name">
                {toy.toyName}
               </MediumText>
-              <Link to='/'>
+              <Link onClick={() => handleOnUserClick(toy.user.id)}>
                 <Paper variant="outlined" className="user-account">
                   <div className="avatar">
                     <StyledBadge
@@ -243,8 +267,8 @@ export function ProductDetailPage(props) {
                     </StyledBadge>
                   </div>
                   <div className="infor">
-                    Người bán: <span>Trung</span><br></br>
-                   Đánh giá: <Rating name="read-only" value={3.5} readOnly precision={0.5} /><br></br>
+                    Người bán: <span>{toy.user ? toy.user.userName : '' }</span><br></br>
+                   Đánh giá: <Rating name="read-only" value={toy.user ? toy.user.rate : 0 } readOnly precision={0.5} /><br></br>
                   </div>
                 </Paper>
               </Link>
@@ -255,7 +279,9 @@ export function ProductDetailPage(props) {
               <div className="btn-contact">
                 {
                   toy.status ==="READY" ? (
-                    <Button className="btn-done" variant="contained" startIcon={<FavoriteTwoToneIcon  />}>
+                    <Button className="btn-done" variant="contained"
+                    onClick={() => setOpenModal(true)}
+                     startIcon={<FavoriteTwoToneIcon  />}>
                     Yêu cầu trao đổi
                    </Button>
                   ) : (
@@ -291,6 +317,13 @@ export function ProductDetailPage(props) {
           />
         </div>
       </AppWrapper>
+      <ModalUi open={openModal}
+        onCancelClick={() => setOpenModal(false)}
+        title={'Yêu cầu trao đổi'}
+        content={'Bạn có thực sự muốn giao dịch đồ chơi này?'}
+        labelDone="Yêu cầu"
+      onDoneClick={requestTransaction}
+      />
     </div >
   );
 }
@@ -308,7 +341,12 @@ function mapDispatchToProps(dispatch) {
       return new Promise((resolve, reject) => {
         return dispatch(PageActions.getDetailToy({ resolve, reject, data }));
       });
-  }
+  },
+  requestToy : async (data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.requestToy({ resolve, reject, data }));
+    });
+},
   };
 }
 

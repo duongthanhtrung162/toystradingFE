@@ -20,3 +20,10 @@ export function getDetailToy(data) {
     payload: data
   };
 }
+export function requestToy(data) {
+  
+  return {
+    type: constant.REQUEST_TOY,
+    payload: data
+  };
+}

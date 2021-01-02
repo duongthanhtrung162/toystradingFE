@@ -155,7 +155,7 @@ function ProductItem({ isProductUser, item, marginLR, marginTB, style }) {
               </CardActionArea>
               <CardActions className="btn-group">
                   {
-                    true ? (
+                    item.status ==="READY" ?  (
                       <Button size="small"
                         variant="contained"
                         className="btn request"
