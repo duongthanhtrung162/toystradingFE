@@ -19,6 +19,7 @@ function MaterialTableUi(props) {
   const { title, filterType, className, columns, data, download, print } = props;
   const options = {
     filterType: filterType === 'dropdown' ? 'dropdown' : 'checkbox',
+    selectableRows: false,
     download: download ? 'true' : 'false',
     print: print ? 'true' : 'false',
     expandableRowsOnClick: true,

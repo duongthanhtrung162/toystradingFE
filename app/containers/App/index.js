@@ -75,7 +75,7 @@ export default function App() {
         <Route exact path={routesLinks.category} component={CategoryPage} />
         <Route exact path={routesLinks.productDetail} component={ProductDetailPage} />
         <PrivateRoute    path={routesLinks.userProfile} component={UserProfilePage} />
-        <Route   path={`${routesLinks.dashboardPage}/toy/add`} 
+        <Route   path={`${routesLinks.addToy}`} 
              component={ToyPageEdit}
             />
         <PrivateRoute    path={routesLinks.homeAdmin} component={HomeAdmin} />

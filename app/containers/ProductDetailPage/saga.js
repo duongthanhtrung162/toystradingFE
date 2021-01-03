@@ -25,7 +25,7 @@ export function* getDetailToy(action) {
 // Individual exports for testing
 export function* requestToy(action) {
   const { reject, resolve, data} = action.payload;
-  data['toyId'] = parseInt(data['toyId']);
+  // data['toyid'] = parseInt(data['toyid']);
   try {
     const apiUrl = `https://toystrading.herokuapp.com/v1/auth/transaction`
     const result = yield apiRequests.postRequest(apiUrl, data);

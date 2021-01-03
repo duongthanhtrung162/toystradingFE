@@ -7,11 +7,28 @@ import { take, call, put, select, takeLatest } from 'redux-saga/effects';
  import * as PageActions from './actions';
 import apiRequests from '../App/apiRequest'
 export function* addToy(action) {
-  const { reject, resolve } = action.payload;
+  const { reject, resolve,data } = action.payload;
   
   try {
     const apiUrl = yield apiRequests.addToy;
-    const result = yield apiRequests.postRequest(apiUrl, {'toyName': 'sss'});
+    const result = yield apiRequests.postRequest(apiUrl, data);
+    
+    if (result) {
+      
+      resolve(result)
+     
+    }
+  } catch (err) {
+    
+    reject(err);
+  }
+}
+export function* getDetailToy(action) {
+  const { reject, resolve, data} = action.payload;
+  
+  try {
+    const apiUrl = yield apiRequests.toy;
+    const result = yield apiRequests.getRequest(`${apiUrl}/${data}`, {});
     
     if (result) {
       
@@ -26,5 +43,6 @@ export function* addToy(action) {
 export default function* toyPageEditSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(constant.ADD_TOY, addToy);
+  yield takeLatest(constant.GET_DETAIL_TOY, getDetailToy);
 
 }

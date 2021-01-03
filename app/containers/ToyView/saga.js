@@ -36,7 +36,7 @@ export function* deleteToy(action) {
      
     }
   } catch (err) {
-    deubugger
+    
     reject(err);
   }
 }

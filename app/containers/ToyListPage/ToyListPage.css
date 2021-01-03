@@ -10,8 +10,61 @@ font-size: 13px;
     color : #23a1d1;
     font-size: 13px;
 }
-.toy-list-page-wrapper .iconStatus.new{
-    border-color : #23a1d1;
-    color: #23a1d1;
-    font-size: 13px;
+.status{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size:  0.875rem;
+}
+.status.request {
+    color: #f85c1e;
+    border-radius: 6px;
+    background-color: rgba(248, 92, 30, 0.1);
+}
+    .status.request
+    .icon-status {
+        margin-right: 5px;
+    color: #f85c1e;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #f85c1e;
+    display: inline-block;
+    
+}
+
+    .status.accepted {
+    color: #03c3ec;
+    border-radius: 6px;
+    background-color: rgba(3, 195, 236, 0.1);
+}
+
+    .status.accepted
+    .icon-status {
+        margin-right: 5px;
+
+    color: #03c3ec;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #03c3ec;
+    display: inline-block;
+}
+
+    .status.cancel {
+    color: #778699;
+    border-radius: 6px;
+    background-color: rgba(114, 128, 157, 0.15);
+}
+
+    .status.cancel
+    .icon-status {
+        margin-right: 5px;
+
+    color: #778699;
+    border-radius: 6px;
+    width: 8px;
+    height: 9px;
+    background-color: #778699;
+    display: inline-block;
 }

@@ -155,15 +155,17 @@ export function ProductDetailPage(props) {
     history.push(`/user/${userId}`);
   };
   const requestTransaction = async () => {
-    let data = {toyId : productId}
+    let data = {toyid : productId}
     await props.requestToy(data)
     .then((rs) => {
+      
       enqueueSnackbar('Yêu cầu thành công', {
         variant: 'success',
       });
     }
     )
     .catch((err)=> {
+     
       enqueueSnackbar(err.response.data.message, {
         variant: 'error',
       });

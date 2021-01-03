@@ -13,6 +13,13 @@ export function defaultAction(name, value) {
     value
   };
 }
+export function getDetailToy(data) {
+  
+  return {
+    type: constant.GET_DETAIL_TOY,
+    payload: data
+  };
+}
 export function addToy(data) {
   
   return {

@@ -60,7 +60,7 @@ export function ToyView(props) {
 
 
   const deleteItem = (id) => {
-    debugger  
+      
     props.deleteToy(id)
     .then((rs) => {
       props.getNewestToy();
