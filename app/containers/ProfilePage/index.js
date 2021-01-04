@@ -11,8 +11,6 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
 
 
 import { useInjectSaga } from 'utils/injectSaga';
@@ -30,37 +28,124 @@ import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 //component
+import { useSnackbar } from 'notistack';
+
 import LargeText from '../../components/LargeText/index';
 import TextFieldUi from '../../components/TextFieldUi/index';
+import * as PageActions from './actions';
+import { clearAllLocalStorage } from '../../utils/helper';
+import history from 'utils/history';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+// const gender = [
+//   {
+//     value: 'Nam',
+//     label: 'Nam',
+//   },
+//   {
+//     value: 'Nữ',
+//     label: 'Nữ',
+//   },
+// ]
 
-const gender = [
-  {
-    value: 'Nam',
-    label: 'Nam',
-  },
-  {
-    value: 'Nữ',
-    label: 'Nữ',
-  },
-]
-
-export function ProfilePage() {
+export function ProfilePage(props) {
   useInjectReducer({ key: 'profilePage', reducer });
   useInjectSaga({ key: 'profilePage', saga });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const [isEditting, setIsEditting] = useState(false);
   const uploadPhotoRef = useRef(null);
   const [imagePreview, setImagePreview] = useState('');
   const [image, setImg] = useState('');
+
+  const user = props.profilePage.user;
+
   const getImagePreview = (e) => {
     if (e.target.files[0]) {
       setImagePreview(URL.createObjectURL(e.target.files[0]));
       setImg(e.target.files[0]);
     }
   };
+  const validationSchema = yup.object().shape({
+    userName: yup.string()
+      .required('Nhập tên tài khoản!'),
+    phone: yup.string()
+      .required('Nhập số điện thoại!'),
+  });
+  const formikStep = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      userName: user.userName ? user.userName : '',
+      phone: user.phone ? user.phone : '',
+      email: user.email ? user.email : ''
+
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      let data = {};
+      data['userName'] = values.userName;
+      data['phone'] = values.phone;
+
+
+      props.updateUser(data)
+        .then((rs) => {
+
+          setIsEditting(false);
+          resetForm();
+          enqueueSnackbar('Cập nhật thành công', {
+            variant: 'success',
+          });
+        })
+        .catch((err) => {
+          if (err.response) {
+            resetForm();
+            enqueueSnackbar(err.response.data.message, {
+              variant: 'error',
+            });
+          }
+        });
+
+    }
+  })
+  const validationSchemaChangePass = yup.object().shape({
+    newPassword: yup.string()
+      .min(5, 'Mật khẩu tối thiểu 5 kí tự!')
+      .max(10, 'Mật khẩu tối đa 10 kí tự!')
+      .required('Nhập mật khẩu tài khoản!')
+  });
+  const formikStepChangePass = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      newPassword: '',
+    },
+    validationSchema: validationSchemaChangePass,
+    onSubmit: (values, { resetForm }) => {
+
+      props.updateUser(values)
+        .then(async (rs) => {
+          await clearAllLocalStorage();
+          history.push('/login');
+          enqueueSnackbar('Đăng nhập với mật khẩu mới', {
+            variant: 'success',
+          });
+        })
+        .catch((err) => {
+          if (err.response) {
+            resetForm();
+            enqueueSnackbar(err.response.data.message, {
+              variant: 'error',
+            });
+          }
+        });
+
+    }
+  })
   useEffect(() => {
-   console.log('profile');
-  }, [])
+    (async () => {
+      await props.getUser();
+      //setCategoryList(result.data.data.data); 
+    })();
+  }, [isEditting]);
 
   return (
     <div>
@@ -94,15 +179,15 @@ export function ProfilePage() {
                     <div className="right-column-wrapper">
                       <div className="user-name-wrapper">
                         <LargeText mbNumber={0} style={{ textAlign: 'left' }} className="product-name">
-                          Cá Nhân
-                       </LargeText>
+                          {user.userName}
+                        </LargeText>
                         <div className="rate-wrapper">
-                          <Rating name="read-only" value={3.5} readOnly precision={0.5} />
+                          <Rating name="read-only" value={user.rate} readOnly precision={0.5} />
                         </div>
                       </div>
                       <div className="ecoin">
                         <LocalAtmTwoToneIcon className="icon-coin" />
-                        <div className="ecoin-count">10</div>
+                        <div className="ecoin-count">{user.ecoin}</div>
                       </div>
                       <div className="btn-edit">
                         <Button
@@ -116,16 +201,16 @@ export function ProfilePage() {
                       <div className="main-info-wrapper">
                         <div className="info-item">
                           <div className="key">E-mail </div>
-                          <div>{'@mail' || '-'}</div>
+                          <div>{user.email}</div>
                         </div>
                         <div className="info-item">
                           <div className="key">Số điện thoại</div>
-                          <div>{'03030303' || '-'}</div>
+                          <div>{user.phone}</div>
                         </div>
-                        <div className="info-item">
+                        {/* <div className="info-item">
                           <div className="key">Giới tính</div>
                           <div>{'Nam' || '-'}</div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </>
@@ -157,29 +242,60 @@ export function ProfilePage() {
                         />
                       </div>
                       <div className="right-column-wrapper">
-                        <form className="editting-form">
+                        <form className="editting-form" onSubmit={formikStep.handleSubmit}>
                           <TextFieldUi
                             type={'text'}
                             label={'Email'}
-                            value={'Trung@mgmailc.om'}
+                            name="email"
+                            value={formikStep.values.email}
+                            onChange={formikStep.handleChange}
+                            onBlur={formikStep.handleBlur}
+                            errors={formikStep.errors.email}
+                            error={formikStep.touched.email && Boolean(formikStep.errors.email)}
+                            touched={formikStep.touched.email}
                             locked
                           />
                           <TextFieldUi
                             type={'text'}
                             label={'Tên'}
-                            defaultValue={'Trung@mgmailc.om'}
+                            name="userName"
+                            className="name"
+                            value={formikStep.values.userName}
+                            onChange={formikStep.handleChange}
+                            onBlur={formikStep.handleBlur}
+                            errors={formikStep.errors.userName}
+                            error={formikStep.touched.userName && Boolean(formikStep.errors.userName)}
+                            touched={formikStep.touched.userName}
+                            onChange={
+                              (e) => {
+                                formikStep.handleChange(e);
+
+                              }
+                            }
                           />
                           <TextFieldUi
+                            name="phone"
                             type={'number'}
+                            className="phone"
                             label={'Số điện thoại'}
-                            defaultValue={'77777'}
+                            value={formikStep.values.phone}
+                            onChange={formikStep.handleChange}
+                            onBlur={formikStep.handleBlur}
+                            errors={formikStep.errors.phone}
+                            error={formikStep.touched.phone && Boolean(formikStep.errors.phone)}
+                            touched={formikStep.touched.phone}
+                            onChange={
+                              (e) => {
+                                formikStep.handleChange(e);
+                              }
+                            }
                           />
-                          <TextFieldUi
+                          {/* <TextFieldUi
                             isSelect
                             label={'Giới tính'}
                             options={gender}
                             defaultValue={'Nam'}
-                          />
+                          /> */}
                           <div className="btn-form">
                             <Button variant="contained"
                               className="btn-cancel"
@@ -209,14 +325,27 @@ export function ProfilePage() {
           </TabPanel>
           <TabPanel>
             <div className="change-password-wrapper">
-              <form className="form-change-password">
-                <TextFieldUi
+              <form className="form-change-password" onSubmit={formikStepChangePass.handleSubmit}>
+                {/* <TextFieldUi
                   type={'password'}
                   label={'Mật khẩu cũ'}
-                />
+                /> */}
                 <TextFieldUi
+                  name="newPassword"
+                  className="password"
                   type={'password'}
                   label={'Mật khẩu mới'}
+                  value={formikStepChangePass.values.newPassword}
+                  onChange={formikStepChangePass.handleChange}
+                  onBlur={formikStepChangePass.handleBlur}
+                  errors={formikStepChangePass.errors.newPassword}
+                  error={formikStepChangePass.touched.newPassword && Boolean(formikStepChangePass.errors.newPassword)}
+                  touched={formikStepChangePass.touched.newPassword}
+                  onChange={
+                    (e) => {
+                      formikStepChangePass.handleChange(e)
+                    }
+                  }
                 />
                 <div className="btn-form">
                   <Button
@@ -226,7 +355,7 @@ export function ProfilePage() {
                     //onClick={() => setIsEditting(true)}
                     startIcon={<SaveIcon />}
                   >
-                    Lưu
+                    Lưu mật khẩu
                            </Button>
                 </div>
               </form>
@@ -239,7 +368,6 @@ export function ProfilePage() {
 }
 
 ProfilePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -248,7 +376,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getUser: async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getUser({ resolve, reject }));
+      });
+    },
+    updateUser: async (data) => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.updateUser({ resolve, reject, data }));
+      });
+    },
   };
 }
 

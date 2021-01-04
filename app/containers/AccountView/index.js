@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export function AccountView(props) {
   useInjectReducer({ key: 'accountView', reducer });
   useInjectSaga({ key: 'accountView', saga });
+  
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const user = props.accountView.user;

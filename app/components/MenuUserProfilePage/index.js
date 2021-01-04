@@ -20,32 +20,33 @@ function MenuUserProfilePage() {
 
   return (
     <div className="menu-profile-wrapper">
-      <div className="header">
+      {/* <div className="header">
         <NavLink to={`${routesLinks.userProfile}/main`} className="menu-item" activeStyle={activeStyle}> 
           <LineChartOutlined />
           <span>Thống kê</span>
         </NavLink>
-      </div>
+      </div> */}
       <div className="menu-list">
-        <NavLink to={`${routesLinks.userProfile}/toy`} activeStyle={activeStyle} className="menu-item">
-          <CodeSandboxOutlined />
-          <span>Đồ chơi</span>
-          <span className="count">2</span>
-        </NavLink>
-        <NavLink to={`${routesLinks.userProfile}/sold`} activeStyle={activeStyle} className="menu-item">
-          <PercentageOutlined />
-          <span>Đã bán</span>
-          <span className="count">2</span>
-        </NavLink>
-        <NavLink to={`${routesLinks.userProfile}/purchased`} activeStyle={activeStyle} className="menu-item">
-          <ShoppingOutlined />
-          <span>Đã mua</span>
-          <span className="count">2</span>
-        </NavLink>
         <NavLink to={`${routesLinks.userProfile}/profile`} activeStyle={activeStyle} className="menu-item">
           <SmileTwoTone />
           <span>Cá nhân</span>
         </NavLink>
+        <NavLink to={`${routesLinks.userProfile}/toy`} activeStyle={activeStyle} className="menu-item">
+          <CodeSandboxOutlined />
+          <span>Đồ chơi</span>
+          <span className="count"></span>
+        </NavLink>
+        <NavLink to={`${routesLinks.userProfile}/sold`} activeStyle={activeStyle} className="menu-item">
+          <PercentageOutlined />
+          <span>Giao dịch bán</span>
+          <span className="count"></span>
+        </NavLink>
+        <NavLink to={`${routesLinks.userProfile}/purchased`} activeStyle={activeStyle} className="menu-item">
+          <ShoppingOutlined />
+          <span>Giao dịch mua</span>
+          <span className="count"></span>
+        </NavLink>
+
       </div>
     </div>
   );

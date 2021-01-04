@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React , {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -25,11 +25,41 @@ import LargeText from '../../components/LargeText/index';
 import AccordionUI from '../../components/AccordionUI/index';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-export function PurchaseListPage() {
+import { useSnackbar } from 'notistack';
+import * as PageActions from './actions';
+import * as _ from 'lodash';
+export function PurchaseListPage(props) {
   useInjectReducer({ key: 'purchaseListPage', reducer });
   useInjectSaga({ key: 'purchaseListPage', saga });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const listBuy  = props.purchaseListPage.listBuy;
 
+  const onUpdateTrans = (id, text) => {
+    const formData = new FormData();
+    formData.append(`status`, text)
+    props.updateTrans(id,formData)
+    .then((rs) => {
+       props.getListBuy();
+       enqueueSnackbar('Thao tác thành công', {
+        variant: 'success',
+      });
+    })
+    .catch((err) => {
+      if (err.response) {
+        enqueueSnackbar(err.response.data.message, {
+          variant: 'error',
+        });
+      }
+    });
+  }
+
+  useEffect(() => {
+
+    (async() => {
+     await props.getListBuy();
+     //setCategoryList(result.data.data.data); 
+    })();
+  }, []);
   return (
     <div className="purchase-page-wrapper">
       <LargeText mbNumber={20} style={{ textAlign: 'left', fontSize: '25px' }} className="product-name">
@@ -44,40 +74,87 @@ export function PurchaseListPage() {
         </TabList>
         <TabPanel>
           <div className="list-wrapper">
-        <AccordionUI />
-        <AccordionUI />
+            {
+              _.isEmpty(listBuy) ? <div style={{fontSize:"20px"}}>Không có giao dịch</div>
+              :
+              listBuy.map((item,index) => {
+                return (
+                  <AccordionUI item={item} type="buy" 
+                  updateTrans={onUpdateTrans}     
+                  />
+                )
+              })
+
+
+            }
 
           </div>
         </TabPanel>
         <TabPanel>
           <div className="list-wrapper">
-          <InfiniteScroll
-                  // dataLength={shippedOrders.length}
-                  // next={() => dispatch(actions.getShippedOrders(paramsShipped))}
-                  // hasMore={!isEndShipped}
-                  // loader={<LoadingMore isSimpleLoading />}
-                  // scrollThreshold={1}
-                >
-                  </InfiniteScroll>
+          {
+              _.isEmpty(listBuy) ? <div style={{fontSize:"20px"}}>Không có giao dịch</div>
+              :
+              listBuy.map((item,index) => {
+                if(item.status === "REQUEST")
+                {
+                  return (
+                    <AccordionUI item={item} type="buy" 
+                    updateTrans={onUpdateTrans}     
+                    />
+                  )
+                }
+               
+              })
+
+            }
           </div>
         </TabPanel>
         <TabPanel>
-          <div className="list-wrapper">
+        {
+              _.isEmpty(listBuy) ? <div style={{fontSize:"20px"}}>Không có giao dịch</div>
+              :
+              listBuy.map((item,index) => {
+                if(item.status === "ACCEPTED")
+                {
+                  return (
+                    <AccordionUI item={item} type="buy" 
+                    updateTrans={onUpdateTrans}     
+                    />
+                  )
+                }
+               
+              })
 
-          </div>
+            }
         </TabPanel>
         <TabPanel>
           <div className="list-wrapper">
+          {
+              _.isEmpty(listBuy) ? <div style={{fontSize:"20px"}}>Không có giao dịch</div>
+              :
+              listBuy.map((item,index) => {
+                if(item.status === "DONE" || item.status === "CANCEL")
+                {
+                  return (
+                    <AccordionUI item={item} type="buy" 
+                    updateTrans={onUpdateTrans}     
+                    />
+                  )
+                }
+               
+              })
 
+            }
           </div>
         </TabPanel>
+       
       </Tabs>
     </div>
   );
 }
 
 PurchaseListPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -86,7 +163,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getListBuy : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getListBuy({ resolve, reject }));
+      });
+  },
+  updateTrans : async (id,data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.updateTrans({ resolve, reject,id,data }));
+    });
+},
   };
 }
 

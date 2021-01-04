@@ -6,14 +6,19 @@
 import produce from 'immer';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = {};
+export const initialState = {
+  listSold: []
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const soldListPageReducer = (state = initialState, action) =>
   produce(state, (/* draft */) => {
     switch (action.type) {
       case DEFAULT_ACTION:
-        break;
+  
+        state.listSold = action.value;
+
+      return {...state};
     }
   });
 

@@ -3,7 +3,7 @@ import routesLinks from '../../containers/App/routesLinks'
 export const menuUserLogin = [
     {
         title : 'Thông tin tài khoản' ,
-        path : routesLinks.userProfile
+        path : `${routesLinks.userProfile}/profile`
     },
     {
         title : 'Đăng xuất' ,

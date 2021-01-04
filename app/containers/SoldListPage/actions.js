@@ -4,10 +4,26 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as constant from './constants'
 
-export function defaultAction() {
+export function defaultAction(name, value) {
   return {
-    type: DEFAULT_ACTION,
+    type: constant.DEFAULT_ACTION,
+    name,
+    value
+  };
+}
+export function getListSold(data) {
+  return {
+    type: constant.ACTION_GET_SOLD,
+    payload: data
+
+  };
+}
+export function updateTrans(data) {
+  return {
+    type: constant.ACTION_UP_TRANS,
+    payload: data
+
   };
 }

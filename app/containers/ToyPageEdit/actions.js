@@ -28,3 +28,11 @@ export function addToy(data) {
 
   };
 }
+export function updateToy(data) {
+  debugger
+  return {
+    type: constant.UPDATE_TOY,
+    payload: data
+
+  };
+}

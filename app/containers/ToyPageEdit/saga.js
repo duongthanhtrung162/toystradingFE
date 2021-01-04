@@ -40,9 +40,27 @@ export function* getDetailToy(action) {
     reject(err);
   }
 }
+export function* updateToy(action) {
+  const { reject, resolve, data,id} = action.payload;
+  debugger
+  try {
+    const apiUrl = `https://toystrading.herokuapp.com/v1/auth/toy`;
+    const result = yield apiRequests.putRequest(`${apiUrl}/${id}`, data);
+    
+    if (result) {
+      
+      resolve(result)
+     
+    }
+  } catch (err) {
+    
+    reject(err);
+  }
+}
 export default function* toyPageEditSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(constant.ADD_TOY, addToy);
   yield takeLatest(constant.GET_DETAIL_TOY, getDetailToy);
+  yield takeLatest(constant.UPDATE_TOY, updateToy);
 
 }

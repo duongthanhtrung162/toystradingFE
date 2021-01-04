@@ -28,3 +28,6 @@
     left: 50%;
     margin-left: -2px;
 }
+.sold-page-wrapper .react-tabs .react-tabs__tab-panel .list-wrapper {
+    margin-top: 10px;
+ }

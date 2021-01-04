@@ -43,18 +43,20 @@ export function UserProfilePage() {
         </div>
         <div className="right-column-section">
           <Switch>
-            <Route exact  path={`${routesLinks.userProfile}/profile`} 
+          <Route exact  path={`${routesLinks.userProfile}/profile`} 
              component={ProfilePage}
             />
             <Route exact  path={`${routesLinks.userProfile}/toy`} 
              component={ToyListPage}
             />
-            <Route exact  path={`${routesLinks.userProfile}/purchased`} 
-             component={PurchaseListPage}
-            />
             <Route exact  path={`${routesLinks.userProfile}/sold`} 
              component={SoldListPage}
             />
+            <Route exact  path={`${routesLinks.userProfile}/purchased`} 
+             component={PurchaseListPage}
+            />
+            
+            
             </Switch>
         </div>
       </AppWrapper>

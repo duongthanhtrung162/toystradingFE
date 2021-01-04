@@ -36,6 +36,7 @@ import queryString from 'query-string';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import routesLinks from '../App/routesLinks';
 
 import './ToyEditPage.css';
 
@@ -46,41 +47,80 @@ export function ToyPageEdit(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   let history = useHistory();
   const [toy, setToy] = useState({});
-debugger
+
   const [imagePreview, setImagePreview] = useState([]);
-  const [imageNew, setImageNew] = useState([]);
+  // const [imageNew, setImageNew] = useState([]);
   const uploadPhotoRef = useRef(null);
+
   let categoryList = props.headerNew.categoryList;
   let tagList = props.headerNew.tagList;
-  console.log('imageeeeePreview', imagePreview);
-  const getImageNew = (e) => {
+
+  const getImageNew = async (e) => {
+    
     if (e.target.files) {
-      // const fileArray = Array.from(e.target.files).map((file) => {
-      //   let reader = new FileReader();
-      //   debugger
-      //  reader.readAsDataURL(file);
-      //   return {'base64' : reader.result , 'url' : URL.createObjectURL(file) }
-      // } );
-      const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-      console.log('urlllllll', e.target.files[0]);
-      setImagePreview((preImage) => preImage.concat(fileArray))
+      const dataQuery = queryString.parse(location.search);
+      const formData = new FormData();
+      for (let i = 0; i < e.target.files.length; i++) {
+        formData.append(`image`, e.target.files[i])
+      }
+      //formData.append(`image`, e.target.files)
+      await props.updateToy(formData, dataQuery.id)
+        .then((rs) => {
+          props.getDetailToy(dataQuery.id)
+            .then((rs) => {
+              
+              setToy(rs.data.data);
+            })
+            .catch((err) => {
+            });
+
+        })
+        .catch((err) => {
+          if (err.response) {
+            enqueueSnackbar(err.response.data.message, {
+              variant: 'error',
+            });
+          }
+        });
+      // const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      // console.log('urlllllll', e.target.files[0]);
+      // setImagePreview((preImage) => preImage.concat(fileArray))
       //fileArray.map((file) => setImagePreview([ ...imagePreview, file]))
     }
   };
   const renderImageNew = (source) => {
-    return source.map((photo) => {
-      return (<div className="product-image">
-        <img src={photo} key={photo} />
-        <DeleteIcon className="icon-delete" onClick={() => removeImagePreview(photo)} />
-      </div>)
-    })
+    if (source.length > 0) {
+      return source.map((photo) => {
+        return (<div className="product-image">
+          <img src={photo.url} key={photo} />
+          <DeleteIcon className="icon-delete" onClick={() => removeImagePreview(photo.url)} />
+        </div>)
+      })
+    }
+
   }
-  const removeImagePreview = (photo) => {
-    let newArr = [...imagePreview]
-    lodash.remove(newArr, function (e) {
-      return e === photo;
-    });
-    setImagePreview(newArr);
+  const removeImagePreview = async (url) => {
+
+    const dataQuery = queryString.parse(location.search);
+    const formData = new FormData();
+    formData.append(`assetDel[0][url]`, url)
+    await props.updateToy(formData, dataQuery.id)
+      .then((rs) => {
+        props.getDetailToy(dataQuery.id)
+          .then((rs) => {
+            setToy(rs.data.data);
+          })
+          .catch((err) => {
+          });
+
+      })
+      .catch((err) => {
+        if (err.response) {
+          enqueueSnackbar(err.response.data.message, {
+            variant: 'error',
+          });
+        }
+      });
   }
 
   const dropdownNavCity = [
@@ -173,45 +213,65 @@ debugger
     enableReinitialize: true,
     initialValues: {
       toyName: _.isEmpty(toy) ? '' : toy.toyName,
-      category: _.isEmpty(toy) ? '' : toy.category,
+      category: _.isEmpty(toy) ? 0 : toy.category,
       ecoin: _.isEmpty(toy) ? 0 : toy.ecoin,
       age: _.isEmpty(toy) ? '13' : toy.age,
-      sex: _.isEmpty(toy) ? '' : toy.sex,
+      sex: _.isEmpty(toy) ? 'trai' : toy.sex,
       city: _.isEmpty(toy) ? 'HCM' : toy.city,
-      condition: _.isEmpty(toy) ? '' : toy.condition,
+      condition: _.isEmpty(toy) ? 'S' : toy.condition,
       description: _.isEmpty(toy) ? '' : toy.description,
       tag: []
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log('valueeeee', values)
       debugger
-      // const formData = new FormData();
-      // Object.keys(values).map(key => {
-      //   if (key !== 'tag')
-      //     formData.append(key, values[key]);
-      // });
-      // if (values.tag.length > 0) {
-      //   values.tag.forEach((item, index) => {
+      const formData = new FormData();
+      Object.keys(values).map(key => {
+        if (key !== 'tag')
+          formData.append(key, values[key]);
+      });
+      if (values.tag.length > 0) {
+        values.tag.forEach((item, index) => {
 
-      //     formData.append(`tag[${index}][id]`, item.id)
-      //   });
-      // }
-      // props.addToy(formData)
-      //   .then((rs) => {
+          formData.append(`tag[${index}][id]`, item.id)
+        });
+      }
+      if (location.search !== "") {
+        const dataQuery = queryString.parse(location.search);
 
-      //     enqueueSnackbar('Thao tác thành công', {
-      //       variant: 'success',
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     if (err.response) {
-      //       resetForm();
-      //       enqueueSnackbar(err.response.data.message, {
-      //         variant: 'error',
-      //       });
-      //     }
-        //});
+        props.updateToy(formData,dataQuery.id)
+        .then((rs) => {
+          history.push(`${routesLinks.userProfile}/toy`);
+          enqueueSnackbar('cập nhật thành công', {
+            variant: 'success',
+          });
+        })
+        .catch((err) => {
+          if (err.response) {
+            
+            enqueueSnackbar(err.response.data.message, {
+              variant: 'error',
+            });
+          }
+        });
+      }else{
+        props.addToy(formData)
+        .then((rs) => {
+          history.push(`${routesLinks.userProfile}/toy`);
+          enqueueSnackbar('Tạo thành công', {
+            variant: 'success',
+          });
+        })
+        .catch((err) => {
+          if (err.response) {
+            resetForm();
+            enqueueSnackbar(err.response.data.message, {
+              variant: 'error',
+            });
+          }
+        });
+      }
+     
 
     }
   })
@@ -299,7 +359,7 @@ debugger
                 options={dropdownNavAge}
                 name="age"
                 className="product-age"
-                value={ dropdownNavAge.find(option => option.id === formikStep.values.age)}
+                value={dropdownNavAge.find(option => option.id === formikStep.values.age)}
                 onBlur={formikStep.handleBlur}
                 errors={formikStep.errors.age}
                 touched={formikStep.touched.age}
@@ -408,14 +468,13 @@ debugger
              </Button>
               }
 
-
             </div>
             <input
               hidden
               multiple
               ref={uploadPhotoRef}
               type="file"
-              accept="image/jpg,image/png"
+              //accept="image/jpg,image/png"
               onChange={event => getImageNew(event)}
             />
             <Carousel
@@ -423,7 +482,7 @@ debugger
               hideArrow
               slidesToShow={5}
               slidesToScroll={1}
-              items={renderImageNew(imagePreview)}
+              items={_.isEmpty(toy) ? renderImageNew(imagePreview) : renderImageNew(toy.assets)}
             />
             <div className="form-section btn">
               <Button
@@ -468,6 +527,11 @@ function mapDispatchToProps(dispatch) {
     getDetailToy: async (data) => {
       return new Promise((resolve, reject) => {
         return dispatch(PageActions.getDetailToy({ resolve, reject, data }));
+      });
+    },
+    updateToy: async (data, id) => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.updateToy({ resolve, reject, data, id }));
       });
     },
   };

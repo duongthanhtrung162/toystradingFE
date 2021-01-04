@@ -29,8 +29,7 @@ export function* updateUser(action) {
   if(data["phone"]){
     data["phone"] = `${data.phone}`;
   }
-  console.log(data);
-  debugger
+  
   try {
     const apiUrl = `https://toystrading.herokuapp.com/v1/auth/users/upOnly`;
     const result = yield apiRequests.putRequest(apiUrl, data);
