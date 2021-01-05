@@ -82,9 +82,9 @@ function Row(props) {
 
                 </TableCell >
                 <TableCell   >
-                    <div className={`status ${row.status === "REQUEST" ? 'request' : (row.status === "ACCEPT" ? 'accepted' : 'cancel')}`}>
+                    <div className={`status ${row.status === "REQUEST" ? 'request' : (row.status === "ACCEPTED" ? 'accepted' : 'cancel')}`}>
                         <span className="icon-status"></span>
-                        {row.status === "REQUEST" ? 'đang yêu cầu' : (row.status === "ACCEPT" ? 'đồng ý giao dịch' : (row.status === "SOLD" ? 'đã bán' : 'hủy bỏ') )}
+                        {row.status === "REQUEST" ? 'đang yêu cầu' : (row.status === "ACCEPTED" ? 'đồng ý giao dịch' : (row.status === "DONE" ? 'đã bán' : 'hủy bỏ') )}
                     </div>
 
                 </TableCell>

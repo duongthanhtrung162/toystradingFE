@@ -1,5 +1,6 @@
 .sold-page-wrapper {
     padding-left: 15px;
+    width: 70%;
 }
 .sold-page-wrapper .react-tabs .react-tabs__tab-list {
     list-style-type: none;
