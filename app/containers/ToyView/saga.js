@@ -11,7 +11,7 @@ export function* getNewestToy(action) {
   
   try {
     
-    const apiUrl = `https://toystrading.herokuapp.com/v1/toy`;
+    const apiUrl = `https://toystrading.herokuapp.com/v1/toy_admin`;
     const result = yield apiRequests.getRequest(apiUrl, {});
     
     
