@@ -52,6 +52,7 @@ const apiRequests = {
   category: `${config.toystrading.host}${config.toystrading.api.category}`,
   tag: `${config.toystrading.host}${config.toystrading.api.tag}`,
   toy: `${config.toystrading.host}${config.toystrading.api.toy}`,
+  toyRelated: `${config.toystrading.host}${config.toystrading.api.toyRelated}`,
   addToy: `${config.toystrading.host}${config.toystrading.api.addToy}`,
   restartPassword: `${config.toystrading.host}${config.toystrading.api.restartPassword}`,
 

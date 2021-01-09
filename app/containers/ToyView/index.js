@@ -70,6 +70,9 @@ export function ToyView(props) {
     }
     )
     .catch((err)=> {
+      enqueueSnackbar(err.response.data.message, {
+        variant: 'error',
+      });
     }
     )
   }

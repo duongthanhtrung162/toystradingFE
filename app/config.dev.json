@@ -11,6 +11,7 @@
       "tag": "tag",
       "tagAuth" : "auth/tag",
       "toy": "toy",
+      "toyRelated": "toy_category",
       "addToy": "auth/toy"
     }
   }

@@ -44,10 +44,12 @@ export function AccountView(props) {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const user = props.accountView.user;
+
   const [updateInfor, setupdateInfor] = useState(false)
+
   const changeUpdate = () =>{
-    
-    setupdateInfor(true);
+    const newValue = !updateInfor;
+    setupdateInfor(newValue);
   }
   useEffect(() => {
     

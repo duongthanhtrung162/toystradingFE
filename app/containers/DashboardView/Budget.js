@@ -32,9 +32,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Budget = ({ className, ...rest }) => {
+const Budget = ({ className,countEcoin,...rest }) => {
   const classes = useStyles();
 
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -52,13 +55,13 @@ const Budget = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              BUDGET
+               ECOIN HỆ THỐNG
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              $24,000
+              ${countEcoin.total ? formatNumber(countEcoin.total) : 0}
             </Typography>
           </Grid>
           <Grid item>
@@ -67,7 +70,7 @@ const Budget = ({ className, ...rest }) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
+        {/* <Box
           mt={2}
           display="flex"
           alignItems="center"
@@ -85,7 +88,7 @@ const Budget = ({ className, ...rest }) => {
           >
             Since last month
           </Typography>
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

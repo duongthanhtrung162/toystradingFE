@@ -23,26 +23,31 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TrafficByDevice = ({ className, ...rest }) => {
+const TrafficByDevice = ({ className,countTransStatus, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
-
+const getData= (count) => {
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: [count.request, count.accepted, count.cancel, count.done],
         backgroundColor: [
-          colors.indigo[500],
+          colors.orange[600],
+          colors.blue[500],
           colors.red[600],
-          colors.orange[600]
+          colors.deepPurple[200]
+          
         ],
         borderWidth: 8,
         borderColor: colors.common.white,
         hoverBorderColor: colors.common.white
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
-  };
+    labels: ['Đang yêu cầu', 'Đồng ý', 'Hủy bỏ','Hoàn tất']
+  }
+  return data;
+}
+ ;
 
   const options = {
     animation: false,
@@ -66,33 +71,43 @@ const TrafficByDevice = ({ className, ...rest }) => {
     }
   };
 
-  const devices = [
-    {
-      title: 'Desktop',
-      value: 63,
-      icon: LaptopMacIcon,
-      color: colors.indigo[500]
-    },
-    {
-      title: 'Tablet',
-      value: 15,
-      icon: TabletIcon,
-      color: colors.red[600]
-    },
-    {
-      title: 'Mobile',
-      value: 23,
-      icon: PhoneIcon,
-      color: colors.orange[600]
-    }
-  ];
+  const getDevices = (count) => {
+    const   devices = [
+      {
+        title: 'Đang yêu cầu',
+        value: count.request,
+        icon: LaptopMacIcon,
+        color: colors.orange[600]
+      },
+      {
+        title: 'Đồng ý',
+        value: count.accepted,
+        icon: TabletIcon,
+        color: colors.blue[600]
+      },
+      {
+        title: 'Hủy bỏ',
+        value: count.cancel,
+        icon: PhoneIcon,
+        color: colors.red[600]
+      },
+      {
+        title: 'Hoàn tất',
+        value: count.done,
+        icon: PhoneIcon,
+        color:  colors.deepPurple[200]
+      }
+    ];
+    return devices;
+  }
+
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Giao dịch" />
       <Divider />
       <CardContent>
         <Box
@@ -100,7 +115,7 @@ const TrafficByDevice = ({ className, ...rest }) => {
           position="relative"
         >
           <Doughnut
-            data={data}
+            data={getData(countTransStatus)}
             options={options}
           />
         </Box>
@@ -109,7 +124,7 @@ const TrafficByDevice = ({ className, ...rest }) => {
           justifyContent="center"
           mt={2}
         >
-          {devices.map(({
+          {getDevices(countTransStatus).map(({
             color,
             icon: Icon,
             title,
@@ -120,7 +135,7 @@ const TrafficByDevice = ({ className, ...rest }) => {
               p={1}
               textAlign="center"
             >
-              <Icon color="action" />
+              {/* <Icon color="action" /> */}
               <Typography
                 color="textPrimary"
                 variant="body1"
@@ -132,7 +147,7 @@ const TrafficByDevice = ({ className, ...rest }) => {
                 variant="h2"
               >
                 {value}
-                %
+                
               </Typography>
             </Box>
           ))}

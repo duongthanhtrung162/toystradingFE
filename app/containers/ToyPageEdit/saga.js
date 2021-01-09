@@ -42,7 +42,7 @@ export function* getDetailToy(action) {
 }
 export function* updateToy(action) {
   const { reject, resolve, data,id} = action.payload;
-  debugger
+  
   try {
     const apiUrl = `https://toystrading.herokuapp.com/v1/auth/toy`;
     const result = yield apiRequests.putRequest(`${apiUrl}/${id}`, data);

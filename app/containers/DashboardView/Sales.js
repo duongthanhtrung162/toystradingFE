@@ -1,87 +1,63 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Bar } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
   Divider,
-  useTheme,
+  Typography,
+  colors,
   makeStyles,
-  colors
+  useTheme
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
+import LaptopMacIcon from '@material-ui/icons/LaptopMac';
+import PhoneIcon from '@material-ui/icons/Phone';
+import TabletIcon from '@material-ui/icons/Tablet';
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {
+    height: '100%'
+  }
 }));
 
-const Sales = ({ className, ...rest }) => {
+const Sales = ({ className,countToyStatus, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const data = {
-    datasets: [
-      {
-        backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
-      },
-      {
-        backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
-      }
-    ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
-  };
+  const getData= (count) => {
+    const data = {
+      datasets: [
+        {
+          data: [count.ready, count.pending, count.sold],
+          backgroundColor: [
+            colors.orange[600],
+            colors.blue[500],
+            colors.deepPurple[200]
+            
+          ],
+          borderWidth: 8,
+          borderColor: colors.common.white,
+          hoverBorderColor: colors.common.white
+        }
+      ],
+      labels: ['Sẵn sàng', 'Đang giao dịch','Đã bán']
+    }
+    return data;
+  }
 
   const options = {
     animation: false,
-    cornerRadius: 20,
+    cutoutPercentage: 80,
     layout: { padding: 0 },
-    legend: { display: false },
+    legend: {
+      display: false
+    },
     maintainAspectRatio: false,
     responsive: true,
-    scales: {
-      xAxes: [
-        {
-          barThickness: 12,
-          maxBarThickness: 10,
-          barPercentage: 0.5,
-          categoryPercentage: 0.5,
-          ticks: {
-            fontColor: theme.palette.text.secondary
-          },
-          gridLines: {
-            display: false,
-            drawBorder: false
-          }
-        }
-      ],
-      yAxes: [
-        {
-          ticks: {
-            fontColor: theme.palette.text.secondary,
-            beginAtZero: true,
-            min: 0
-          },
-          gridLines: {
-            borderDash: [2],
-            borderDashOffset: [2],
-            color: theme.palette.divider,
-            drawBorder: false,
-            zeroLineBorderDash: [2],
-            zeroLineBorderDashOffset: [2],
-            zeroLineColor: theme.palette.divider
-          }
-        }
-      ]
-    },
     tooltips: {
       backgroundColor: theme.palette.background.default,
       bodyFontColor: theme.palette.text.secondary,
@@ -94,51 +70,81 @@ const Sales = ({ className, ...rest }) => {
       titleFontColor: theme.palette.text.primary
     }
   };
-
+  const getDevices = (count) => {
+    const   devices = [
+      {
+        title: 'Sẵn sàng',
+        value: count.ready,
+        icon: LaptopMacIcon,
+        color: colors.orange[600]
+      },
+      {
+        title: 'Đang giao dịch',
+        value: count.pending,
+        icon: TabletIcon,
+        color: colors.blue[600]
+      },
+      {
+        title: 'Đã bán',
+        value: count.sold,
+        icon: PhoneIcon,
+        color: colors.deepPurple[200]
+      }
+    ];
+    return devices;
+  }
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Last 7 days
-          </Button>
-        )}
-        title="Latest Sales"
-      />
+      <CardHeader title="Đồ chơi" />
       <Divider />
       <CardContent>
         <Box
-          height={400}
+          height={300}
           position="relative"
         >
-          <Bar
-            data={data}
+          <Doughnut
+            data={getData(countToyStatus)}
             options={options}
           />
         </Box>
-      </CardContent>
-      <Divider />
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
+        <Box
+          display="flex"
+          justifyContent="center"
+          mt={2}
         >
-          Overview
-        </Button>
-      </Box>
+          {getDevices(countToyStatus).map(({
+            color,
+            icon: Icon,
+            title,
+            value
+          }) => (
+            <Box
+              key={title}
+              p={1}
+              textAlign="center"
+            >
+              {/* <Icon color="action" /> */}
+              <Typography
+                color="textPrimary"
+                variant="body1"
+              >
+                {title}
+              </Typography>
+              <Typography
+                style={{ color }}
+                variant="h2"
+              >
+                {value}
+                
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </CardContent>
+     
     </Card>
   );
 };

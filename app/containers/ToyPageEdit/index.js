@@ -213,7 +213,7 @@ export function ToyPageEdit(props) {
     enableReinitialize: true,
     initialValues: {
       toyName: _.isEmpty(toy) ? '' : toy.toyName,
-      category: _.isEmpty(toy) ? 0 : toy.category,
+      category: _.isEmpty(toy) ? 29 : toy.category,
       ecoin: _.isEmpty(toy) ? 0 : toy.ecoin,
       age: _.isEmpty(toy) ? '13' : toy.age,
       sex: _.isEmpty(toy) ? 'trai' : toy.sex,
@@ -224,7 +224,7 @@ export function ToyPageEdit(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      debugger
+      
       const formData = new FormData();
       Object.keys(values).map(key => {
         if (key !== 'tag')

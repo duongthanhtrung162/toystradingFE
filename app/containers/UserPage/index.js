@@ -109,7 +109,7 @@ export function UserPage(props) {
               </div>
               <div className="infor-right">
                 Trạng thái: <span>{user.activated === 1 ? 'hoạt động' : 'đã khóa'}</span><br></br>
-              Đánh giá: <Rating name="read-only" value={user.rate} readOnly precision={0.5} /><br></br>
+              Đánh giá: <Rating name="read-only" value={user.rate ? user.rate : 0} readOnly precision={0.5} /><br></br>
               </div>
             </div>
           </Paper>

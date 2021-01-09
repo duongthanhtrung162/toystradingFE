@@ -29,7 +29,7 @@ function AccordionUi(props) {
   const [openModalAccept,setOpenModalAccept] = useState(false);
   const [openModalContact,setOpenModalContact] = useState(false);
   const [openModalDone,setOpenModalDone] = useState(false);
-
+  const [rate, setRate] = useState(0)
   const {item ,type} = props;
   let history = useHistory();
   const [idTransaction, setidTransaction] = useState(0)
@@ -100,7 +100,7 @@ function AccordionUi(props) {
           </div>
           <div className="header">
             <div className="title">
-              Đối tác
+              {type == "buy" ? 'Người bán' : 'Người mua'}
             </div>
           </div>
           <div className="person-infor">
@@ -182,7 +182,10 @@ function AccordionUi(props) {
                className="btn rate"
                variant="contained"
                startIcon={<GradeIcon />}
-             onClick={() => setOpenModalRate(true)}
+             onClick={() => {
+              setidTransaction(item.id)
+              setOpenModalRate(true)}
+             }
              >
                Đánh giá
               </Button>
@@ -242,7 +245,11 @@ function AccordionUi(props) {
       //content={'Bạn có thực sự muốn đồng giao dịch  không?'}
       labelDone="Đánh giá"
       onChangeRating={(event,newValue) =>{
-        console.log('rate',newValue);
+        setRate(newValue);
+      }}
+      onDoneClick={() => {
+        setOpenModalRate(false);
+        props.updateTransRate(idTransaction,rate);
       }}
       />
     </div>

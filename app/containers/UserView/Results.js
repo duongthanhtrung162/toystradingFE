@@ -142,6 +142,7 @@ const Results = ({ className, customers,userList,handleDelete, ...rest }) => {
                       <Typography
                         color="textPrimary"
                         variant="body1"
+                        style={{color:'blue', fontWeight: 'bolder'}}
                       >
                         {item.userName}
                       </Typography>

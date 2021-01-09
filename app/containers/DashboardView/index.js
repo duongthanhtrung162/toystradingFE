@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -19,7 +19,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-
+import * as PageActions from './actions';
 import {
   Container,
   Grid,
@@ -43,10 +43,25 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   }
 }));
-export function DashboardView() {
+export function DashboardView(props) {
   useInjectReducer({ key: 'dashboardView', reducer });
   useInjectSaga({ key: 'dashboardView', saga });
+  const {allUser, allEcoin, allToy, allEcoinTrans, transStatus, toyStatus}  = props.dashboardView;
+  
   const classes = useStyles();
+  useEffect(() => {
+
+    (async() => {
+      props.getAllUser();
+      props.getAllEcoin();
+      props.getAllToy();
+      props.getAllEcoinTrans();
+      props.getTransStatus();
+      props.getToyStatus();
+
+     //setCategoryList(result.data.data.data); 
+    })();
+  }, []);
   return  (
     <Page
       className={classes.root}
@@ -64,7 +79,7 @@ export function DashboardView() {
             xl={3}
             xs={12}
           >
-            <Budget />
+            <Budget countEcoin={allEcoin}/>
           </Grid>
           <Grid
             item
@@ -73,7 +88,7 @@ export function DashboardView() {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalCustomers countUser = {allUser}/>
           </Grid>
           <Grid
             item
@@ -82,7 +97,7 @@ export function DashboardView() {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <TasksProgress countToy={allToy}/>
           </Grid>
           <Grid
             item
@@ -91,27 +106,27 @@ export function DashboardView() {
             xl={3}
             xs={12}
           >
-            <TotalProfit />
+            <TotalProfit countEcoinTrans={allEcoinTrans}/>
           </Grid>
           <Grid
             item
-            lg={8}
+            lg={6}
             md={12}
             xl={9}
             xs={12}
           >
-            <Sales />
+            <Sales countToyStatus={toyStatus}/>
           </Grid>
           <Grid
             item
-            lg={4}
+            lg={6}
             md={6}
             xl={3}
             xs={12}
           >
-            <TrafficByDevice />
+            <TrafficByDevice countTransStatus={transStatus} />
           </Grid>
-          <Grid
+          {/* <Grid
             item
             lg={4}
             md={6}
@@ -128,7 +143,7 @@ export function DashboardView() {
             xs={12}
           >
             <LastestOrders />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>
@@ -136,7 +151,7 @@ export function DashboardView() {
 }
 
 DashboardView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -145,7 +160,36 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getAllUser : async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getAllUser({ resolve, reject }));
+      });
+  },
+  getAllEcoin : async () => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.getAllEcoin({ resolve, reject }));
+    });
+},
+getAllToy : async () => {
+  return new Promise((resolve, reject) => {
+    return dispatch(PageActions.getAllToy({ resolve, reject }));
+  });
+},
+getAllEcoinTrans : async () => {
+  return new Promise((resolve, reject) => {
+    return dispatch(PageActions.getAllEcoinTrans({ resolve, reject }));
+  });
+},
+getTransStatus : async () => {
+  return new Promise((resolve, reject) => {
+    return dispatch(PageActions.getTransStatus({ resolve, reject }));
+  });
+},
+getToyStatus : async () => {
+  return new Promise((resolve, reject) => {
+    return dispatch(PageActions.getToyStatus({ resolve, reject }));
+  });
+},
   };
 }
 

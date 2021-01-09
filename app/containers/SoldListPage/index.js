@@ -50,6 +50,26 @@ export function SoldListPage(props) {
       }
     });
   }
+  const onUpdateTransRate = (id, rate) => {
+    const formData = new FormData();
+    formData.append(`rate`, rate);
+    formData.append(`transactionid`, id)
+
+    props.updateTransRate(formData)
+    .then((rs) => {
+       props.getListSold();
+       enqueueSnackbar('Đánh giá thành công', {
+        variant: 'success',
+      });
+    })
+    .catch((err) => {
+      if (err.response) {
+        enqueueSnackbar(err.response.data.message, {
+          variant: 'error',
+        });
+      }
+    });
+  }
   useEffect(() => {
 
     (async() => {
@@ -78,7 +98,9 @@ export function SoldListPage(props) {
               listSold.map((item,index) => {
                 return (
                   <AccordionUI item={item} type="sold" 
-                  updateTrans={onUpdateTrans}     
+                  updateTrans={onUpdateTrans}
+                  updateTransRate={onUpdateTransRate}      
+     
                   />
                 )
               })
@@ -97,7 +119,9 @@ export function SoldListPage(props) {
                 {
                   return (
                     <AccordionUI item={item} type="sold" 
-                    updateTrans={onUpdateTrans}     
+                    updateTrans={onUpdateTrans}  
+                    updateTransRate={onUpdateTransRate}      
+   
                     />
                   )
                 }
@@ -116,7 +140,9 @@ export function SoldListPage(props) {
                 {
                   return (
                     <AccordionUI item={item} type="sold" 
-                    updateTrans={onUpdateTrans}     
+                    updateTrans={onUpdateTrans} 
+                    updateTransRate={onUpdateTransRate}      
+    
                     />
                   )
                 }
@@ -136,7 +162,9 @@ export function SoldListPage(props) {
                 {
                   return (
                     <AccordionUI item={item} type="sold" 
-                    updateTrans={onUpdateTrans}     
+                    updateTrans={onUpdateTrans}  
+                    updateTransRate={onUpdateTransRate}      
+   
                     />
                   )
                 }
@@ -170,6 +198,11 @@ function mapDispatchToProps(dispatch) {
       return dispatch(PageActions.updateTrans({ resolve, reject,id,data }));
     });
 },
+updateTransRate : async (data) => {
+  return new Promise((resolve, reject) => {
+    return dispatch(PageActions.updateTransRate({ resolve, reject,data }));
+  });
+}
   };
 }
 

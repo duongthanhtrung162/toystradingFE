@@ -133,7 +133,7 @@ const Results = ({ className, categoryList, handleEdit, handleDelete, ...rest })
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  style={{color:'blue', fontWeight: 'bolder'}}>
                     {item.value}
                   </TableCell>
                   {/* <TableCell>

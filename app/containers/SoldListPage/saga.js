@@ -12,7 +12,7 @@ export function* getListSold(action) {
     const apiUrl = `https://toystrading.herokuapp.com/v1/auth/transaction/sell`;
     const result = yield apiRequests.getRequest(apiUrl, {});
     if (result) {
-      debugger
+      
       yield put(PageActions.defaultAction('listSold', result.data.data));
       resolve(result)
      
@@ -32,7 +32,26 @@ export function* upTrans(action) {
     
     if (result) {
       
-      yield put(PageActions.defaultAction('listBuy', result.data.data));
+     // yield put(PageActions.defaultAction('listBuy', result.data.data));
+      resolve(result)
+     
+    }
+  } catch (err) {
+    reject(err);
+  }
+}
+export function* upTransRate(action) {
+  const { reject, resolve,data } = action.payload;
+  
+  try {
+     
+
+    const apiUrl = `https://toystrading.herokuapp.com/v1/auth/transrate`;
+    const result = yield apiRequests.postRequest(apiUrl, data);
+    
+    
+    if (result) {
+      
       resolve(result)
      
     }
@@ -44,4 +63,6 @@ export default function* soldListPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(constant.ACTION_GET_SOLD, getListSold);
   yield takeLatest(constant.ACTION_UP_TRANS, upTrans);
+  yield takeLatest(constant.ACTION_UP_TRANS_RATE, upTransRate);
+
 }

@@ -74,7 +74,7 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" style={{color : 'blue', fontWeight: 'bolder'}}>
                     {row.toyName}
                 </TableCell>
                 <TableCell >

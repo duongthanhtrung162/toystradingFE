@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TotalCustomers = ({ className, ...rest }) => {
+const TotalCustomers = ({ className,countUser,...rest }) => {
   const classes = useStyles();
 
   return (
@@ -52,13 +52,13 @@ const TotalCustomers = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL CUSTOMERS
+               KHÁCH HÀNG
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              1,600
+              {countUser.total}
             </Typography>
           </Grid>
           <Grid item>
@@ -67,7 +67,7 @@ const TotalCustomers = ({ className, ...rest }) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
+        {/* <Box
           mt={2}
           display="flex"
           alignItems="center"
@@ -83,9 +83,9 @@ const TotalCustomers = ({ className, ...rest }) => {
             color="textSecondary"
             variant="caption"
           >
-            Since last month
+           Từ tháng
           </Typography>
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

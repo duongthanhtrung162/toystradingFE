@@ -23,9 +23,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = ({ className, ...rest }) => {
+const TotalProfit = ({ className,countEcoinTrans,...rest }) => {
   const classes = useStyles();
-
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -43,13 +45,13 @@ const TotalProfit = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL PROFIT
+              SỐ TIỀN ĐÃ GIAO DỊCH
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              $23,200
+              ${countEcoinTrans.total ? formatNumber(countEcoinTrans.total): 0}
             </Typography>
           </Grid>
           <Grid item>

@@ -27,3 +27,10 @@ export function requestToy(data) {
     payload: data
   };
 }
+export function getToyRelated(data) {
+  
+  return {
+    type: constant.GET_TOY_RELATED,
+    payload: data
+  };
+}

@@ -136,7 +136,7 @@ const Results = ({ className, handleDelete,handleEdit,tagList, ...rest }) => {
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  style={{color:'blue', fontWeight: 'bolder'}}>
                     {item.value}
                   </TableCell>
                   {/* <TableCell>

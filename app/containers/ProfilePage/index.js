@@ -182,7 +182,7 @@ export function ProfilePage(props) {
                           {user.userName}
                         </LargeText>
                         <div className="rate-wrapper">
-                          <Rating name="read-only" value={user.rate} readOnly precision={0.5} />
+                          <Rating name="read-only" value={user.rate ? user.rate : 0} readOnly precision={0.5} />
                         </div>
                       </div>
                       <div className="ecoin">

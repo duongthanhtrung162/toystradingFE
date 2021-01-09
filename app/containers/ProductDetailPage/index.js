@@ -38,6 +38,7 @@ import Carousel from '../../components/Carousel/index';
 import { Link, useHistory,useLocation, useParams } from 'react-router-dom';
 import * as PageActions from './actions';
 import ModalUi from '../../components/ModalUi/index';
+import { isEmptyArray } from 'formik';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -77,7 +78,8 @@ export function ProductDetailPage(props) {
 
   const [toy, setToy] = useState({});
   const [openModal, setOpenModal] = useState(false);
-
+  
+  const {toyRelated} = props.productDetailPage;
   let history = useHistory();
   let location = useLocation();
   let { productId } = useParams();
@@ -182,6 +184,7 @@ export function ProductDetailPage(props) {
     })
     .catch((err) => {
     });
+     props.getToyRelated(productId);
      })();
 
   }, [location]);
@@ -234,7 +237,7 @@ export function ProductDetailPage(props) {
                 <div className="sub-title">Link tham khảo</div>
                 <div className="content"><a>dsdsdsds</a></div>
               </div> */}
-              <div className="table-row">
+              {/* <div className="table-row">
                 <div className="sub-title">Từ khóa</div>
                 <div className="content tag-list">
                   {toy.tag_toys && toy.tag_toys.map((tagItem, index) => {
@@ -246,7 +249,7 @@ export function ProductDetailPage(props) {
                     )
                   })}
                   </div>
-              </div>
+              </div> */}
             </div>
           </div>
             </div>
@@ -254,6 +257,9 @@ export function ProductDetailPage(props) {
               <MediumText mbNumber={20} style={{ textAlign: 'left', fontSize: '30px' }} className="product-name">
                {toy.toyName}
               </MediumText>
+              <div className="category" style={{color: 'blue', marginBottom:'10px', fontStyle: 'Italic', cursor: 'pointer'}}>
+               { toy.category ? toy.category.value : ''}
+              </div>
               <Link onClick={() => handleOnUserClick(toy.user.id)}>
                 <Paper variant="outlined" className="user-account">
                   <div className="avatar">
@@ -302,7 +308,9 @@ export function ProductDetailPage(props) {
           
         </div>
         <div className="related-products-main">
-          <Carousel
+          {
+            toyRelated.length > 0 && 
+            <Carousel
             className="related-product-list"
             marginBottom={0}
             label={
@@ -313,10 +321,12 @@ export function ProductDetailPage(props) {
             hideArrow
             slidesToShow={4}
             slidesToScroll={1}
-            // items={images.map((item, index) => {
-            //   return (<ProductItem item={item} />);
-            // })}
+            items={toyRelated.map((item, index) => {
+              return (<ProductItem item={item} />);
+            })}
           />
+          }
+          
         </div>
       </AppWrapper>
       <ModalUi open={openModal}
@@ -344,6 +354,11 @@ function mapDispatchToProps(dispatch) {
         return dispatch(PageActions.getDetailToy({ resolve, reject, data }));
       });
   },
+  getToyRelated : async (data) => {
+    return new Promise((resolve, reject) => {
+      return dispatch(PageActions.getToyRelated({ resolve, reject, data }));
+    });
+},
   requestToy : async (data) => {
     return new Promise((resolve, reject) => {
       return dispatch(PageActions.requestToy({ resolve, reject, data }));

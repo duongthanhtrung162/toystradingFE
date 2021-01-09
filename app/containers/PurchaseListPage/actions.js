@@ -27,3 +27,10 @@ export function updateTrans(data) {
 
   };
 }
+export function updateTransRate(data) {
+  return {
+    type: constant.ACTION_UP_TRANS_RATE,
+    payload: data
+
+  };
+}
