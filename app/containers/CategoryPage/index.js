@@ -4,7 +4,7 @@
  *
  */
 
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -32,16 +32,32 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ProductItem from '../../components/ProductItem/index';
 import Button from '@material-ui/core/Button';
 import * as PageActions from './actions';
-
+import Chip from '@material-ui/core/Chip';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import {
   Link,
   useHistory,
   useLocation
 } from "react-router-dom";
 import queryString from 'query-string';
+import routesLinks from '../App/routesLinks';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+const GreenRadio = withStyles({
+  root: {
+    color: '#00B7EB',
+    '&$checked': {
+      color: '#00B7EB',
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
 
 const GreenCheckbox = withStyles({
-  root: {
+  root: {             
     color: '#00B7EB',
     '&$checked': {
       color: '#00B7EB',
@@ -50,62 +66,122 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-
-
 export function CategoryPage(props) {
   useInjectReducer({ key: 'categoryPage', reducer });
   useInjectSaga({ key: 'categoryPage', saga });
+  const tagList = props.categoryPage.tagList;
 
-   let history = useHistory();
-   let location = useLocation();
-   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  let history = useHistory();
+  let location = useLocation();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-   const [errorFilter, setErrorFilter] = useState(false);
-
-  const [ecoinDefault, setEcoinDefault] = useState([0, 500]);
-  const [ecoin, setEcoin] = useState([]);
+  
+  const [ecoinDefault, setEcoinDefault] = useState([0, 1000]);
   const [checked, setChecked] = React.useState(true);
   const [toyList, setToyList] = React.useState([]);
+  
+  const [errorFilter, setErrorFilter] = useState(false);
 
+  const dataQuery = queryString.parse(location.search);
+  if(dataQuery.age){
+    if(typeof(dataQuery.age) === 'string'){
+      dataQuery.age= dataQuery.age.split();
+
+    }
+  }
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-  
-  const onFilter = () =>{
-    history.push('category?city=HN');
-  }
 
-  const sortAscending = () =>{
+  const handleChangeEcoin = (data) => {
+
+    const dataQuery = queryString.parse(location.search);
+    dataQuery.min = data[0];
+    dataQuery.max = data[1];
+
+    const stringified = queryString.stringify(dataQuery);
+    history.push({
+      pathname: `${routesLinks.category}`,
+      search: stringified
+    })
+  }
+  const handleChangeCondition = (event) => {
+
+    const dataQuery = queryString.parse(location.search);
+    dataQuery.condition = event.target.value;
+    const stringified = queryString.stringify(dataQuery);
+    history.push({
+      pathname: `${routesLinks.category}`,
+      search: stringified
+    })
+  }
+  const handleChangeSex = (event) => {
+
+    const dataQuery = queryString.parse(location.search);
+    dataQuery.sex = event.target.value;
+    const stringified = queryString.stringify(dataQuery);
+    history.push({
+      pathname: `${routesLinks.category}`,
+      search: stringified
+    })
+    setRadioSex(event.target.value);
+  }
+  const handleChangeTag= (idTag) => {
+
+    const dataQuery = queryString.parse(location.search);
+    dataQuery.tag = idTag
+    const stringified = queryString.stringify(dataQuery);
+    history.push({
+      pathname: `${routesLinks.category}`,
+      search: stringified
+    })
+  }
+  const sortAscending = () => {
     const myData = [].concat(toyList)
-    .sort((a, b) => a.ecoin >= b.ecoin ? 1 : -1);
+      .sort((a, b) => a.ecoin >= b.ecoin ? 1 : -1);
     setToyList(myData);
   }
-  const sortDecreasing = () =>{
+  const sortDecreasing = () => {
     const myData = [].concat(toyList)
-    .sort((a, b) => a.ecoin <= b.ecoin ? 1 : -1);
+      .sort((a, b) => a.ecoin <= b.ecoin ? 1 : -1);
     setToyList(myData);
   }
+  
 
   useEffect(() => {
-    (async() => {
-      const dataQuery = queryString.parse(location.search);   
-      await props.filterToy(dataQuery)
-      .then((rs) => {
-        
-        if(rs.data.data.data.length > 0){
-          setErrorFilter(false)
-          setToyList(rs.data.data.data);
-
-        }else{
-          setToyList(rs.data.data.data);
-          setErrorFilter(true);
-
+    (async () => {
+      await props.getTagList();
+      //setCategoryList(result.data.data.data); 
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const dataQuery = queryString.parse(location.search);
+      if(dataQuery.age){
+        if(typeof(dataQuery.age) === 'string'){
+          dataQuery.age= dataQuery.age.split();
+  
         }
-    })
-    .catch((err) => {
-     
-    });
-     })();
+      }
+      
+      console.log('dataaaaaaaaaaa', dataQuery);
+      await props.filterToy(dataQuery)
+        .then((rs) => {
+
+          if (rs.data.data.data.length > 0) {
+            setErrorFilter(false)
+            setToyList(rs.data.data.data);
+
+          } else {
+            setToyList(rs.data.data.data);
+            setErrorFilter(true);
+
+          }
+        })
+        .catch((err) => {
+
+        });
+    })();
 
   }, [location]);
   return (
@@ -123,10 +199,9 @@ export function CategoryPage(props) {
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="on"
                 min={0}
-                max={500}
-                onChange={(e, data)=>{
-                  setEcoin(data);
-                  console.log('slideeeeeeee',data)
+                max={1000}
+                onChange={(e, data) => {
+                  handleChangeEcoin(data);
                 }}
               />
             </div>
@@ -135,18 +210,11 @@ export function CategoryPage(props) {
                 TÌNH TRẠNG
               </div>
               <div clasName="input-condition">
-                <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
-                  label={<span style={{ fontSize: '14px' }}>Đã sử dụng</span>}
-                  className="checkbox-item"
-                  value="S"
-                />
-                <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
-                  label={<span style={{ fontSize: '14px' }}>Còn mới</span>}
-                  value="M"
-                  className="checkbox-item"
-                />
+                <RadioGroup aria-label="condition" name="condition" value={dataQuery.condition ? dataQuery.condition : 'S'} onChange={handleChangeCondition}>
+                  <FormControlLabel value="S" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Đã sử dụng</span>} />
+                  <FormControlLabel value="M" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Còn mới</span>} />
+                </RadioGroup>
+                
 
               </div>
             </div>
@@ -155,18 +223,11 @@ export function CategoryPage(props) {
                 GIỚI TÍNH
               </div>
               <div clasName="input-condition">
-                <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
-                  label={<span style={{ fontSize: '14px' }}>Bé trai</span>}
-                  className="checkbox-item"
-                  value="male"
-                />
-                <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
-                  label={<span style={{ fontSize: '14px' }}>Bé gái</span>}
-                  value="female"
-                  className="checkbox-item"
-                />
+              <RadioGroup aria-label="sex" name="sex" value={dataQuery.sex ? dataQuery.sex : 'trai'}             
+               onChange={handleChangeSex}>
+                  <FormControlLabel value="trai" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Bé trai</span>} />
+                  <FormControlLabel value="gai" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Bé gái</span>} />
+                </RadioGroup>
 
               </div>
             </div>
@@ -212,18 +273,29 @@ export function CategoryPage(props) {
               </div>
             </div>
             <div className="left-column-item">
-            <Button
-                variant="contained"
-                className="btn filter"
-               onClick={onFilter}
-              > Tìm kiếm
-              </Button>
+              <div className="title">
+                TAGS
+              </div>
+              <div clasName="input-condition">
+                {tagList.length > 0 && tagList.map((tagItem, index) => {
+                  return (
+                    <Chip
+                      style={{ margin: '2px', cursor: 'pointer' }}
+                      label={tagItem.value}
+                      className="tag-name"
+                      onClick={() => handleChangeTag(tagItem.id)}
+                    />
+                  )
+                })}
+
+              </div>
             </div>
+
 
           </div>
 
           <div className="right-column">
-            <div  className="sort-list">
+            <div className="sort-list">
               <span className="title">Ecoin: </span>
               <div className="sort-item" onClick={sortDecreasing}>
                 <ArrowDownwardIcon />
@@ -237,13 +309,13 @@ export function CategoryPage(props) {
               </div>
             </div>
             <div className="product-list">
-            {toyList.map((item, index) => {
-              return (<ProductItem className="home" item={item}  marginLR={10} marginTB={10} />);
-            })}
-            {
-              errorFilter && <div style={{margin: 'auto', fontSize: '20px'}}>Không tìm thấy đồ chơi</div> 
-            }
-              
+              {toyList.map((item, index) => {
+                return (<ProductItem className="home" item={item} marginLR={10} marginTB={10} />);
+              })}
+              {
+                errorFilter && <div style={{ margin: 'auto', fontSize: '20px' }}>Không tìm thấy đồ chơi</div>
+              }
+
             </div>
           </div>
         </div>
@@ -262,11 +334,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    filterToy : async (data) => {
+    filterToy: async (data) => {
       return new Promise((resolve, reject) => {
         return dispatch(PageActions.filterToy({ resolve, reject, data }));
       });
-  }
+    },
+    getTagList: async () => {
+      return new Promise((resolve, reject) => {
+        return dispatch(PageActions.getTagList({ resolve, reject }));
+      });
+    }
   };
 }
 

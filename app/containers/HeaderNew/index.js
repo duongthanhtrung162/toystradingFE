@@ -93,7 +93,7 @@ export function HeaderNew(props) {
                 onChange={(value) => setSearchKey(value)}
                  onRequestSearch={() => {
                    if(searchKey !== ''){
-                    history.push(`${routesLinks.category}?toyName=${searchKey}`);
+                      history.push(`${routesLinks.category}?toyName=${searchKey}`);
 
                    }
                   }}

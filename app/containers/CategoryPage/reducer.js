@@ -6,14 +6,17 @@
 import produce from 'immer';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = {};
+export const initialState = {
+  tagList : []
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const categoryPageReducer = (state = initialState, action) =>
   produce(state, (/* draft */) => {
     switch (action.type) {
       case DEFAULT_ACTION:
-        break;
+        state.tagList = action.value.data;
+        return {...state};
     }
   });
 

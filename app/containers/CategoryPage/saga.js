@@ -7,9 +7,10 @@ import apiRequests from '../App/apiRequest'
 // Individual exports for testing
 export function* filterToy(action) {
   const { reject, resolve, data} = action.payload;
+  debugger
   try {
     const apiUrl = yield apiRequests.toy;
-    const result = yield apiRequests.getRequest(apiUrl, data);
+    const result = yield apiRequests.postRequest(apiUrl, data);
     
     if (result) {
       
@@ -21,8 +22,25 @@ export function* filterToy(action) {
     reject(err);
   }
 }
+export function* getTagList(action) {
+  const { reject, resolve } = action.payload;
+  
+  try {
+    const apiUrl = yield apiRequests.tag;
+    const result = yield apiRequests.getRequest(apiUrl, {});
+    
+    if (result) {
+      yield put(PageActions.defaultAction('tagList', result.data.data));
+      resolve(result)
+     
+    }
+  } catch (err) {
+    reject(err);
+  }
+}
 export default function* categoryPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(constant.FILTER_TOY, filterToy);
+  yield takeLatest(constant.ACTION_GET_TAG, getTagList);
 
 }

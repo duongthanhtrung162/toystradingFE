@@ -19,3 +19,11 @@ export function filterToy(data) {
     payload: data
   };
 }
+export function getTagList(data) {
+  
+  return {
+    type: constant.ACTION_GET_TAG,
+    payload: data
+
+  };
+}

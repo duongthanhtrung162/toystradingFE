@@ -135,6 +135,7 @@ const apiRequests = {
           reject(err);
         });
     }),
+    
   deleteRequest: async (apiUrl, data) =>
     new Promise((resolve, reject) => {
       axios
