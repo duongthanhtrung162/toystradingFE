@@ -103,7 +103,7 @@ export function* getToyStatus(action) {
     const result = yield apiRequests.getRequest(apiUrl, {});
     
     if (result) {
-      debugger
+      
       yield put(PageActions.defaultAction('toyStatus', result.data.data));
       resolve(result)
      

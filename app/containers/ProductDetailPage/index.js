@@ -160,14 +160,15 @@ export function ProductDetailPage(props) {
     let data = {toyid : productId}
     await props.requestToy(data)
     .then((rs) => {
-      
+      setOpenModal(false);
       enqueueSnackbar('Yêu cầu thành công', {
         variant: 'success',
       });
     }
     )
     .catch((err)=> {
-     
+      setOpenModal(false);
+
       enqueueSnackbar(err.response.data.message, {
         variant: 'error',
       });

@@ -52,7 +52,7 @@ export function* upTransRate(action) {
     
     
     if (result) {
-      debugger
+      
       resolve(result)
      
     }

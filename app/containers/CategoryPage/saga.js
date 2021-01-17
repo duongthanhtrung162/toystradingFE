@@ -7,7 +7,7 @@ import apiRequests from '../App/apiRequest'
 // Individual exports for testing
 export function* filterToy(action) {
   const { reject, resolve, data} = action.payload;
-  debugger
+  
   try {
     const apiUrl = yield apiRequests.toy;
     const result = yield apiRequests.postRequest(apiUrl, data);

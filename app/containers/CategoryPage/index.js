@@ -57,7 +57,7 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const GreenCheckbox = withStyles({
-  root: {             
+  root: {
     color: '#00B7EB',
     '&$checked': {
       color: '#00B7EB',
@@ -75,22 +75,43 @@ export function CategoryPage(props) {
   let location = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  
+
   const [ecoinDefault, setEcoinDefault] = useState([0, 1000]);
-  const [checked, setChecked] = React.useState(true);
+
   const [toyList, setToyList] = React.useState([]);
-  
+
   const [errorFilter, setErrorFilter] = useState(false);
 
   const dataQuery = queryString.parse(location.search);
-  if(dataQuery.age){
-    if(typeof(dataQuery.age) === 'string'){
-      dataQuery.age= dataQuery.age.split();
+  if (dataQuery.age) {
+    if (typeof (dataQuery.age) === 'string') {
+      dataQuery.age = dataQuery.age.split();
 
     }
   }
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleChange0 = (event) => {
+    const dataQuery = queryString.parse(location.search);
+    if (dataQuery.age) {
+      if (typeof (dataQuery.age) === 'string') {
+        dataQuery.age = dataQuery.age.split();
+      }
+    }
+    if (event.target.checked) {
+      dataQuery.age = 0;
+      const stringified = queryString.stringify(dataQuery);
+      history.push({
+        pathname: `${routesLinks.category}`,
+        search: stringified
+      })
+    } else {
+      const index = colors.indexOf("0");
+      dataQuery.age.splice(index,1);
+      const stringified = queryString.stringify(dataQuery);
+      history.push({
+        pathname: `${routesLinks.category}`,
+        search: stringified
+      })
+    }
   };
 
   const handleChangeEcoin = (data) => {
@@ -126,7 +147,7 @@ export function CategoryPage(props) {
     })
     setRadioSex(event.target.value);
   }
-  const handleChangeTag= (idTag) => {
+  const handleChangeTag = (idTag) => {
 
     const dataQuery = queryString.parse(location.search);
     dataQuery.tag = idTag
@@ -146,7 +167,7 @@ export function CategoryPage(props) {
       .sort((a, b) => a.ecoin <= b.ecoin ? 1 : -1);
     setToyList(myData);
   }
-  
+
 
   useEffect(() => {
     (async () => {
@@ -157,13 +178,13 @@ export function CategoryPage(props) {
   useEffect(() => {
     (async () => {
       const dataQuery = queryString.parse(location.search);
-      if(dataQuery.age){
-        if(typeof(dataQuery.age) === 'string'){
-          dataQuery.age= dataQuery.age.split();
-  
+      if (dataQuery.age) {
+        if (typeof (dataQuery.age) === 'string') {
+          dataQuery.age = dataQuery.age.split();
+
         }
       }
-      
+
       console.log('dataaaaaaaaaaa', dataQuery);
       await props.filterToy(dataQuery)
         .then((rs) => {
@@ -214,7 +235,7 @@ export function CategoryPage(props) {
                   <FormControlLabel value="S" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Đã sử dụng</span>} />
                   <FormControlLabel value="M" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Còn mới</span>} />
                 </RadioGroup>
-                
+
 
               </div>
             </div>
@@ -223,8 +244,8 @@ export function CategoryPage(props) {
                 GIỚI TÍNH
               </div>
               <div clasName="input-condition">
-              <RadioGroup aria-label="sex" name="sex" value={dataQuery.sex ? dataQuery.sex : 'trai'}             
-               onChange={handleChangeSex}>
+                <RadioGroup aria-label="sex" name="sex" value={dataQuery.sex ? dataQuery.sex : 'trai'}
+                  onChange={handleChangeSex}>
                   <FormControlLabel value="trai" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Bé trai</span>} />
                   <FormControlLabel value="gai" control={<GreenRadio />} label={<span style={{ fontSize: '14px' }}>Bé gái</span>} />
                 </RadioGroup>
@@ -237,34 +258,34 @@ export function CategoryPage(props) {
               </div>
               <div clasName="input-condition">
                 <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
+                  control={<GreenCheckbox checked={dataQuery.age ? dataQuery.age.some((element) => element === "0") : false} onChange={handleChange0} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>0-12 tháng</span>}
 
                   className="checkbox-item"
                   value="male"
                 />
                 <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
+                  control={<GreenCheckbox checked={dataQuery.age ? dataQuery.age.some((element) => element === "13") : false} onChange={handleChange0} name="checkedG" />}
                   value="female"
                   label={<span style={{ fontSize: '14px' }}>1-3 tháng</span>}
 
                   className="checkbox-item"
                 />
                 <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
+                  control={<GreenCheckbox checked={dataQuery.age ? dataQuery.age.some((element) => element === "46") : false} onChange={handleChange0} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>4-6 tháng</span>}
 
                   value="female"
                   className="checkbox-item"
                 />
                 <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
+                  control={<GreenCheckbox checked={dataQuery.age ? dataQuery.age.some((element) => element === "611") : false} onChange={handleChange0} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>6-11 tháng</span>}
                   value="female"
                   className="checkbox-item"
                 />
                 <FormControlLabel
-                  control={<GreenCheckbox checked={checked} onChange={handleChange} name="checkedG" />}
+                  control={<GreenCheckbox checked={dataQuery.age ? dataQuery.age.some((element) => element === "12") : false} onChange={handleChange0} name="checkedG" />}
                   label={<span style={{ fontSize: '14px' }}>12 tháng trở lên</span>}
                   value="female"
                   className="checkbox-item"

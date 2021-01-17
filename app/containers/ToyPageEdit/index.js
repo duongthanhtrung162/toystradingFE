@@ -100,7 +100,6 @@ export function ToyPageEdit(props) {
 
   }
   const removeImagePreview = async (url) => {
-
     const dataQuery = queryString.parse(location.search);
     const formData = new FormData();
     formData.append(`assetDel[0][url]`, url)
@@ -213,7 +212,7 @@ export function ToyPageEdit(props) {
     enableReinitialize: true,
     initialValues: {
       toyName: _.isEmpty(toy) ? '' : toy.toyName,
-      category: _.isEmpty(toy) ? 29 : toy.category,
+      category: _.isEmpty(toy) ? categoryList[0].id : toy.category.id,
       ecoin: _.isEmpty(toy) ? 0 : toy.ecoin,
       age: _.isEmpty(toy) ? '13' : toy.age,
       sex: _.isEmpty(toy) ? 'trai' : toy.sex,

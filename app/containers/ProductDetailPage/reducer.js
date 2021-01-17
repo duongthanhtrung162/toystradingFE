@@ -15,7 +15,7 @@ const productDetailPageReducer = (state = initialState, action) =>
   produce(state, (/* draft */) => {
     switch (action.type) {
       case DEFAULT_ACTION:
-        debugger
+        
         state.toyRelated = action.value.data;
         return {...state}
     }
