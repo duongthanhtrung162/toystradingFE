@@ -7,7 +7,6 @@ const routeLinks = {
     homeAdmin: '/homeAdmin',
     addToy: '/dashboard-page/toy/add',
    dashboardPage: '/dashboard-page',
-
     productDetail: '/product-detail/:productId',
     userProfile: '/user-profile',
     category: '/category',

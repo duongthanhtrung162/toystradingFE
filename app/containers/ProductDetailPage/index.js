@@ -168,7 +168,6 @@ export function ProductDetailPage(props) {
     )
     .catch((err)=> {
       setOpenModal(false);
-
       enqueueSnackbar(err.response.data.message, {
         variant: 'error',
       });

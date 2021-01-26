@@ -76,7 +76,7 @@ export function CategoryPage(props) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 
-  const [ecoinDefault, setEcoinDefault] = useState([0, 1000]);
+  const [ecoinDefault, setEcoinDefault] = useState([0, 1000000]);
 
   const [toyList, setToyList] = React.useState([]);
 
@@ -220,7 +220,7 @@ export function CategoryPage(props) {
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="on"
                 min={0}
-                max={1000}
+                max={1000000}
                 onChange={(e, data) => {
                   handleChangeEcoin(data);
                 }}
@@ -252,7 +252,7 @@ export function CategoryPage(props) {
 
               </div>
             </div>
-            <div className="left-column-item">
+            {/* <div className="left-column-item">
               <div className="title">
                 ĐỘ TUỔI
               </div>
@@ -292,7 +292,7 @@ export function CategoryPage(props) {
                 />
 
               </div>
-            </div>
+            </div> */}
             <div className="left-column-item">
               <div className="title">
                 TAGS

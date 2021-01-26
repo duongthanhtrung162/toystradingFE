@@ -102,7 +102,7 @@ export function HeaderNew(props) {
               />
             </Grid>
             <Grid item xs={3} className="noti-header">
-              <Button
+              {/* <Button
                 variant="contained"
                 className="btn noti"
                 startIcon={<Badge badgeContent={4}  color="secondary">
@@ -111,7 +111,7 @@ export function HeaderNew(props) {
                 }
               >
                 Thông báo
-                </Button>
+                </Button> */}
             </Grid>
           </Grid>
         </AppWrapper>
